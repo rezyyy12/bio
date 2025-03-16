@@ -49,7 +49,7 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
             padding: 20px;
-            flex-grow: 1; /* Растягиваем контент, чтобы донат был внизу */
+            flex-grow: 1;
         }
         #content.loaded {
             display: block;
@@ -65,7 +65,7 @@
             background-color: #333;
             color: white;
             text-decoration: none;
-            border-radius: 25px; /* Более округлые кнопки */
+            border-radius: 25px;
             transition: background-color 0.3s ease;
         }
         .social-links a:hover {
@@ -80,7 +80,6 @@
         .social-links a {
             font-size: 0.9em;
         }
-        /* Подвижный фон с белым градиентом */
         body::before {
             content: '';
             position: fixed;
@@ -106,6 +105,10 @@
         }
         #donate-button {
             margin-bottom: 20px;
+            display: none; /* Скрываем кнопку до загрузки */
+        }
+        #donate-button.visible {
+            display: block; /* Показываем кнопку после загрузки */
         }
     </style>
 </head>
@@ -133,9 +136,11 @@
             }).then(() => {
                 const loader = document.getElementById('loader');
                 const content = document.getElementById('content');
+                const donateButton = document.getElementById('donate-button');
                 loader.style.opacity = '0';
                 content.style.opacity = '1';
                 content.style.display = 'block';
+                donateButton.classList.add('visible'); // Показываем кнопку доната
                 return new Promise(resolve => {
                     setTimeout(resolve, 1000);
                 });
