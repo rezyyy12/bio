@@ -14,6 +14,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background-color: black; /* Черный фон */
         }
         #loader {
             position: fixed;
@@ -21,26 +22,15 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 9999;
-            font-size: 2em;
-            display: flex;
             transition: opacity 1s ease;
         }
-        .dot {
-            animation: jump 1.5s infinite alternate;
-            margin: 0 5px;
+        #loader img {
+            width: 100px; /* Размер логотипа */
+            animation: rotate 2s linear infinite; /* Анимация вращения */
         }
-        .dot:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-        .dot:nth-child(3) {
-            animation-delay: 1s;
-        }
-        @keyframes jump {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
             }
         }
         #content {
@@ -80,3 +70,46 @@
             font-size: 0.9em;
         }
         #donate-button {
+            margin-bottom: 20px;
+            display: none;
+        }
+        #donate-button.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <img src="your-logo.png" alt="Загрузка..."> </div>
+    <div id="content">
+        <h1>Привет! Меня зовут rezyyy</h1>
+        <p>Здесь вы можете найти меня:</p>
+        <div class="social-links">
+            <a href="https://t.me/the_rezyyy">Telegram</a>
+            <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
+        </div>
+    </div>
+    <div id="donate-button">
+        <a href="https://t.me/send?start=IVZm9Wi245y7" style="background-color: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; transition: background-color 0.3s ease;">Донат</a>
+    </div>
+    <script>
+        window.onload = function() {
+            new Promise(resolve => {
+                setTimeout(resolve, 4000);
+            }).then(() => {
+                const loader = document.getElementById('loader');
+                const content = document.getElementById('content');
+                const donateButton = document.getElementById('donate-button');
+                loader.style.opacity = '0';
+                content.classList.add('loaded');
+                donateButton.classList.add('visible');
+                return new Promise(resolve => {
+                    setTimeout(resolve, 1000);
+                });
+            }).then(() => {
+                loader.style.display = 'none';
+            });
+        };
+    </script>
+</body>
+</html>
