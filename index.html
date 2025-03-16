@@ -13,6 +13,9 @@
             color: white;
             line-height: 1.6;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         #loader {
             position: fixed;
@@ -46,6 +49,7 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
             padding: 20px;
+            flex-grow: 1; /* Растягиваем контент, чтобы донат был внизу */
         }
         #content.loaded {
             display: block;
@@ -58,13 +62,14 @@
             display: inline-block;
             margin: 10px;
             padding: 15px 30px;
-            background-color: #888888;
+            background-color: #333;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px; /* Более округлые кнопки */
+            transition: background-color 0.3s ease;
         }
         .social-links a:hover {
-            background-color: #666666;
+            background-color: #555;
         }
         h1 {
             font-size: 1.8em;
@@ -99,6 +104,9 @@
                 background-position: 0% 50%;
             }
         }
+        #donate-button {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -114,6 +122,9 @@
             <a href="https://t.me/the_rezyyy">Telegram</a>
             <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
         </div>
+    </div>
+    <div id="donate-button">
+        <a href="https://t.me/send?start=IVZm9Wi245y7" style="background-color: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; transition: background-color 0.3s ease;">Донат</a>
     </div>
     <script>
         window.onload = function() {
