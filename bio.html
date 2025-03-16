@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои социальные сети</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #111; /* Темный фон */
+            color: white;
+            transition: background-color 2s ease; /* Плавный переход фона */
+        }
+        body.loaded {
+            background-color: white; /* Светлый фон после загрузки */
+            color: black;
+        }
+        .social-links {
+            margin-top: 30px;
+            opacity: 0; /* Изначально скрываем ссылки */
+            transition: opacity 2s ease; /* Плавное появление ссылок */
+        }
+        body.loaded .social-links {
+            opacity: 1; /* Показываем ссылки после загрузки */
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body onload="document.body.classList.add('loaded')">
+    <h1>Привет! Меня зовут rezyyy</h1>
+    <p>Здесь вы можете найти мои социальные сети:</p>
+    <div class="social-links">
+        <a href="https://t.me/the_rezyyy">Telegram</a>
+        <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
+        <a href="https://t.me/send?start=IVZm9Wi245y7">Донат</a>
+    </div>
+</body>
+</html>
