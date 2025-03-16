@@ -11,109 +11,45 @@
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
-            color: #333333;
-            line-height: 1.6;
-        }
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease-in-out;
-            font-size: 2em;
-            animation: loadText 1.5s infinite alternate;
+            height: 100vh; /* Занимает всю высоту экрана */
         }
-        @keyframes loadText {
-            0% {
-                font-size: 2em;
-                color: #333;
-            }
-            100% {
-                font-size: 2.5em;
-                color: red;
-            }
+        .loader-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        #content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            padding: 20px;
-        }
-        #content.loaded {
-            display: block;
-            opacity: 1;
-        }
-        .social-links {
-            margin-top: 30px;
-        }
-        .social-links a {
-            display: inline-block;
-            margin: 10px;
-            padding: 15px 30px;
-            background-color: #888888;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .social-links a:hover {
-            background-color: #666666;
-        }
-        h1 {
-            font-size: 1.8em;
-        }
-        p {
-            font-size: 1em;
-        }
-        .social-links a {
-            font-size: 0.9em;
-        }
-        /* Анимация прыгающего квадрата */
-        #jumping-square {
-            width: 50px;
-            height: 50px;
+        .loader-dot {
+            width: 15px;
+            height: 15px;
             background-color: #007bff;
-            margin: 20px auto;
-            animation: jump 1s infinite ease-in-out;
+            border-radius: 50%;
+            margin: 0 10px;
+            animation: dotJump 1.4s infinite ease-in-out;
         }
-        @keyframes jump {
-            0%, 100% {
-                transform: translateY(0);
+        .loader-dot:nth-child(2) {
+            animation-delay: -0.32s;
+        }
+        .loader-dot:nth-child(3) {
+            animation-delay: -0.16s;
+        }
+        @keyframes dotJump {
+            0%, 80%, 100% {
+                transform: scale(0);
             }
-            50% {
-                transform: translateY(-50px);
+            40% {
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <div id="loader">
-        ГРУЗИМ!
+    <div class="loader-dots">
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
     </div>
-    <div id="content">
-        <h1>Привет! Меня зовут rezyyy</h1>
-        <p>Здесь вы можете найти меня:</p>
-        <div id="jumping-square"></div> <div class="social-links">
-            <a href="https://t.me/the_rezyyy">Telegram</a>
-            <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
-            <a href="https://t.me/send?start=IVZm9Wi245y7">Донат</a>
-        </div>
-    </div>
-    <script>
-        window.onload = function() {
-            setTimeout(function(){
-                document.getElementById('loader').style.opacity = '0';
-                document.getElementById('content').classList.add('loaded');
-                setTimeout(function(){
-                    document.getElementById('loader').style.display = 'none';
-                }, 1000);
-            }, 4000);
-        };
-    </script>
 </body>
 </html>
