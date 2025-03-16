@@ -25,6 +25,7 @@
             z-index: 9999;
             font-size: 2em;
             display: flex;
+            transition: opacity 1s ease;
         }
         .dot {
             animation: jump 1.5s infinite alternate;
@@ -47,7 +48,7 @@
         #content {
             display: none;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease;
             padding: 20px;
             flex-grow: 1;
         }
@@ -87,7 +88,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(-45deg, black, #333, #555, white);
+            background: repeating-linear-gradient(45deg, black, black 10px, white 10px, white 20px);
             background-size: 400% 400%;
             animation: animateBackground 10s linear infinite;
             z-index: -1;
@@ -105,18 +106,18 @@
         }
         #donate-button {
             margin-bottom: 20px;
-            display: none; /* Скрываем кнопку до загрузки */
+            display: none;
         }
         #donate-button.visible {
-            display: block; /* Показываем кнопку после загрузки */
+            display: block;
         }
     </style>
 </head>
 <body>
     <div id="loader">
+        <span class="dot"></span>
         <span class="dot">.</span>
-        <span class="dot">.</span>
-        <span class="dot">.</span>
+        <span class="dot"></span>
     </div>
     <div id="content">
         <h1>Привет! Меня зовут rezyyy</h1>
@@ -138,14 +139,13 @@
                 const content = document.getElementById('content');
                 const donateButton = document.getElementById('donate-button');
                 loader.style.opacity = '0';
-                content.style.opacity = '1';
-                content.style.display = 'block';
-                donateButton.classList.add('visible'); // Показываем кнопку доната
+                content.classList.add('loaded');
+                donateButton.classList.add('visible');
                 return new Promise(resolve => {
                     setTimeout(resolve, 1000);
                 });
             }).then(() => {
-                document.getElementById('loader').style.display = 'none';
+                loader.style.display = 'none';
             });
         };
     </script>
