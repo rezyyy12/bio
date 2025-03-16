@@ -9,10 +9,10 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: black; /* Черный фон */
+            background-color: black;
             color: white;
             line-height: 1.6;
-            overflow: hidden; /* Скрываем переполнение для эффекта фона */
+            overflow: hidden;
         }
         #loader {
             position: fixed;
@@ -75,23 +75,7 @@
         .social-links a {
             font-size: 0.9em;
         }
-        /* Анимация прыгающего квадрата */
-        #jumping-square {
-            width: 50px;
-            height: 50px;
-            background-color: #007bff;
-            margin: 20px auto;
-            animation: jump-square 1s infinite ease-in-out;
-        }
-        @keyframes jump-square {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-50px);
-            }
-        }
-        /* Подвижный фон */
+        /* Подвижный фон с белым градиентом */
         body::before {
             content: '';
             position: fixed;
@@ -99,7 +83,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, black, #333, #555, white);
             background-size: 400% 400%;
             animation: animateBackground 10s linear infinite;
             z-index: -1;
@@ -126,11 +110,9 @@
     <div id="content">
         <h1>Привет! Меня зовут rezyyy</h1>
         <p>Здесь вы можете найти меня:</p>
-        <div id="jumping-square"></div>
         <div class="social-links">
             <a href="https://t.me/the_rezyyy">Telegram</a>
             <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
-            <a href="https://t.me/send?start=IVZm9Wi245y7">Донат</a>
         </div>
     </div>
     <script>
