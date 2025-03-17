@@ -87,16 +87,15 @@
             box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
         }
 
-        /* Код-стиль текста */
-        .code-text {
-            font-family: 'Courier New', Courier, monospace;
+        .button.donate {
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+        }
+
+        /* Стиль для дополнительного текста */
+        .extra-text {
             font-size: 1.2em;
             margin-top: 30px;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            max-width: 90%;
         }
 
         /* Модальное окно */
@@ -169,14 +168,15 @@
         <div>
             <a href="https://t.me/the_rezyyy" class="button telegram" id="telegram-link">telegram</a>
             <a href="https://www.tiktok.com/@rezyyy_ts" class="button tiktok">tiktok</a>
+            <a href="https://t.me/send?start=IVZm9Wi245y7" class="button donate">donate</a>
         </div>
 
         <!-- Дополнительный текст -->
-        <div class="code-text">
-            i am a coder from russia  
-            love everyone  
+        <p class="extra-text">
+            i am a coder from russia<br>
+            love everyone<br>
             peaceful sky above your head
-        </div>
+        </p>
     </div>
 
     <!-- Предупреждение перед переходом -->
