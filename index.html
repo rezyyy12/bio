@@ -18,7 +18,7 @@
             overflow: hidden;
         }
 
-        /* Warning Modal */
+        /* Modal Animation */
         #warning-modal {
             position: fixed;
             top: 0;
@@ -26,43 +26,74 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
             z-index: 9999;
+        }
+
+        #warning-modal.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         #modal-content {
             background: #222;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             text-align: center;
             max-width: 80%;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
         }
 
-        .modal-button {
-            margin-top: 10px;
-            padding: 10px 20px;
+        #modal-text {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        /* "OK" Button */
+        .ok-button {
+            background: linear-gradient(45deg, #28a745, #1f8a31);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .ok-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #1f8a31, #146c23);
+        }
+
+        /* Close Icon */
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            color: white;
+            background: none;
             border: none;
             cursor: pointer;
-            font-size: 1em;
-            color: white;
-            border-radius: 5px;
+            transition: transform 0.2s ease;
         }
 
-        .continue-button {
-            background-color: #28a745;
+        .close-button:hover {
+            transform: scale(1.2);
         }
 
-        .cancel-button {
-            background-color: #dc3545;
-        }
-
-        /* Buttons */
-        .button, .donate-button {
+        /* Social Buttons */
+        .button {
             display: inline-block;
             margin: 10px;
-            padding: 12px 25px;
+            padding: 12px 30px;
             font-size: 1em;
             font-weight: bold;
             text-decoration: none;
@@ -71,27 +102,27 @@
             transition: transform 0.2s ease, background 0.3s ease;
         }
 
-        .button {
-            background: linear-gradient(45deg, #ff6600, #ff3300);
-            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+        .button.telegram {
+            background: linear-gradient(45deg, #0088cc, #006699);
+            box-shadow: 0 3px 8px rgba(0, 136, 204, 0.5);
         }
 
-        .button:hover {
+        .button.telegram:hover {
             transform: scale(1.05);
-            background: linear-gradient(45deg, #ff3300, #cc0000);
+            background: linear-gradient(45deg, #006699, #004466);
         }
 
-        .donate-button {
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
-            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+        .button.tiktok {
+            background: linear-gradient(45deg, #ff0050, #cc003d);
+            box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
         }
 
-        .donate-button:hover {
+        .button.tiktok:hover {
             transform: scale(1.05);
-            background: linear-gradient(45deg, #ffaa00, #ff8800);
+            background: linear-gradient(45deg, #cc003d, #99002a);
         }
 
-        /* Code font style for the last text */
+        /* Code text style */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
@@ -107,12 +138,13 @@
     </style>
 </head>
 <body>
+
     <!-- Warning Modal -->
     <div id="warning-modal">
         <div id="modal-content">
-            <p>you are about to open telegram<br>please be careful when sharing information</p>
-            <button class="modal-button continue-button" id="confirm-telegram">continue</button>
-            <button class="modal-button cancel-button" id="cancel-telegram">cancel</button>
+            <button class="close-button" id="cancel-telegram">&times;</button>
+            <p id="modal-text">you are about to open telegram<br>please be careful when sharing information</p>
+            <button class="ok-button" id="confirm-telegram">ok</button>
         </div>
     </div>
 
@@ -121,8 +153,8 @@
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" href="#" id="telegram-link">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
+            <a class="button telegram" href="#" id="telegram-link">telegram</a>
+            <a class="button tiktok" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
         <!-- Code-style text -->
@@ -133,23 +165,30 @@
         </div>
     </div>
 
-    <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
-    </div>
-
     <script>
+        // Open warning modal
         document.getElementById('telegram-link').addEventListener('click', function(event) {
             event.preventDefault();
-            document.getElementById('warning-modal').style.display = 'flex';
+            document.getElementById('warning-modal').classList.add('active');
         });
 
+        // Confirm and redirect to Telegram
         document.getElementById('confirm-telegram').addEventListener('click', function() {
             window.location.href = "https://t.me/the_rezyyy";
         });
 
+        // Close warning modal
         document.getElementById('cancel-telegram').addEventListener('click', function() {
-            document.getElementById('warning-modal').style.display = 'none';
+            document.getElementById('warning-modal').classList.remove('active');
+        });
+
+        // Close modal by clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('warning-modal')) {
+                document.getElementById('warning-modal').classList.remove('active');
+            }
         });
     </script>
+
 </body>
 </html>
