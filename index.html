@@ -18,21 +18,21 @@
             overflow: hidden;
         }
 
-        /* Button to choose language (planet style) */
+        /* Button to choose language (simple round, outline only) */
         #language-button {
             position: fixed;
             top: 15px;
             right: 15px;
-            width: 40px;
-            height: 40px;
-            background-color: #4CAF50;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            border: 2px solid white;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         #language-button:hover {
-            background-color: #45a049;
+            border-color: #4CAF50;
         }
 
         /* Language menu */
@@ -44,7 +44,8 @@
             border-radius: 8px;
             display: none;
             flex-direction: column;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            padding: 10px;
         }
 
         #language-menu.active {
@@ -55,6 +56,9 @@
             padding: 10px 20px;
             cursor: pointer;
             color: white;
+            background: #333;
+            border-radius: 5px;
+            margin: 5px 0;
             transition: background 0.3s;
         }
 
@@ -187,14 +191,14 @@
     </style>
 </head>
 <body>
-    <!-- Language button (planet) -->
+    <!-- Language button (simple round outline) -->
     <div id="language-button"></div>
 
     <!-- Language menu -->
     <div id="language-menu">
-        <div class="language-option" data-lang="en">english</div>
-        <div class="language-option" data-lang="ru">русский</div>
-        <div class="language-option" data-lang="ua">українська</div>
+        <div class="language-option" data-lang="en">English</div>
+        <div class="language-option" data-lang="ru">Русский</div>
+        <div class="language-option" data-lang="ua">Українська</div>
     </div>
 
     <!-- Loading animation -->
@@ -271,14 +275,14 @@
                 document.querySelectorAll(".button")[0].innerText = "телеграм";
                 document.querySelectorAll(".button")[1].innerText = "тик-ток";
                 document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я кодер из россии<br>люблю всех<br>мирного неба над головой";
+                document.querySelector(".code-text").innerHTML = "я программист из россии<br>я вас всех люблю<br>мирного неба над головой";
             } else if (lang === "ua") {
-                document.getElementById("main-text").innerText = "привіт мене звати rezyyy";
+                document.getElementById("main-text").innerText = "привіт, мене звати rezyyy";
                 document.querySelector("p").innerText = "ви можете знайти мене тут";
                 document.querySelectorAll(".button")[0].innerText = "телеграм";
                 document.querySelectorAll(".button")[1].innerText = "тік-ток";
                 document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я кодер з україни<br>люблю всіх<br>мирного неба над головою";
+                document.querySelector(".code-text").innerHTML = "я програміст з україни<br>я вас всіх люблю<br>мирного неба над головою";
             } else {
                 document.getElementById("main-text").innerText = "hello my name is rezyyy";
                 document.querySelector("p").innerText = "you can find me here";
