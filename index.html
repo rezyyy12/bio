@@ -14,7 +14,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #111;
+            background-color: #181818;
         }
 
         /* Экран загрузки */
@@ -69,14 +69,15 @@
             border-right: 3px solid white;
             white-space: nowrap;
             overflow: hidden;
-            font-size: 1.5em; /* Уменьшил текст */
+            font-size: 1.5em;
             max-width: 90%;
+            min-height: 1.5em; /* Оставляем место под текст */
         }
 
         /* Адаптация под мобильные устройства */
         @media (max-width: 480px) {
             #typed-text {
-                font-size: 1.2em; /* Еще меньше на телефонах */
+                font-size: 1.2em;
             }
         }
 
@@ -126,7 +127,6 @@
             background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
-        /* Увеличение заголовков и текста для удобства на мобильных */
         p {
             font-size: 1.1em;
         }
@@ -185,13 +185,17 @@
             const typedText = document.getElementById("typed-text");
             let index = 0;
 
+            // Создаем пустой текст перед началом печати
+            typedText.innerHTML = "&nbsp;";
+
             function type() {
                 if (index < text.length) {
-                    typedText.innerHTML += text.charAt(index);
+                    typedText.innerHTML = text.substring(0, index + 1) + '<span style="border-right: 3px solid white;">&nbsp;</span>';
                     index++;
                     setTimeout(type, 80);
                 } else {
                     typedText.classList.add("blinking"); // Запускаем мигающий курсор после окончания печати
+                    typedText.innerHTML = text; // Убираем временный курсор
                     document.getElementById("content").classList.add("loaded");
                     document.getElementById("donate-button").classList.add("visible");
                 }
