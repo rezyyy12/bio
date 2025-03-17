@@ -17,7 +17,7 @@
             background-color: #181818;
         }
 
-        /* Loading screen */
+        /* Loading animation */
         #loader {
             position: fixed;
             top: 50%;
@@ -171,10 +171,9 @@
                 const donateButton = document.getElementById('donate-button');
 
                 loader.style.opacity = '0';
-                loader.style.visibility = 'hidden';
-
                 setTimeout(() => {
                     loader.style.display = 'none';
+                    content.style.display = 'block';
                     startTypingEffect();
                 }, 500);
             }, 3000);
@@ -184,9 +183,6 @@
             const text = "hello my name is rezyyy";
             const typedText = document.getElementById("typed-text");
             let index = 0;
-
-            // Create empty space before typing starts
-            typedText.innerHTML = "&nbsp;";
 
             function type() {
                 if (index < text.length) {
