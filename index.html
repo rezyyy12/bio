@@ -29,6 +29,7 @@
             border: 2px solid white;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            display: none; /* Initially hidden */
         }
 
         #language-button:hover {
@@ -42,7 +43,7 @@
             right: 15px;
             background: #222;
             border-radius: 8px;
-            display: none;
+            display: none; /* Initially hidden */
             flex-direction: column;
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
             padding: 10px;
@@ -57,7 +58,7 @@
             cursor: pointer;
             color: white;
             background: #333;
-            border-radius: 5px;
+            border-radius: 25px; /* OVAL */
             margin: 5px 0;
             transition: background 0.3s;
         }
@@ -191,16 +192,6 @@
     </style>
 </head>
 <body>
-    <!-- Language button (simple round outline) -->
-    <div id="language-button"></div>
-
-    <!-- Language menu -->
-    <div id="language-menu">
-        <div class="language-option" data-lang="en">English</div>
-        <div class="language-option" data-lang="ru">Русский</div>
-        <div class="language-option" data-lang="ua">Українська</div>
-    </div>
-
     <!-- Loading animation -->
     <div id="loader">
         <div class="dot"></div>
@@ -223,10 +214,21 @@
             i love all of you<br>
             may peace be upon us and the sky be clear above us
         </div>
-    </div>
 
-    <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
+        <!-- Donate Button -->
+        <div id="donate-button">
+            <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
+        </div>
+
+        <!-- Language button -->
+        <div id="language-button"></div>
+
+        <!-- Language menu -->
+        <div id="language-menu">
+            <div class="language-option" data-lang="en">English</div>
+            <div class="language-option" data-lang="ru">Русский</div>
+            <div class="language-option" data-lang="ua">Українська</div>
+        </div>
     </div>
 
     <script>
@@ -236,6 +238,7 @@
                 const loader = document.getElementById('loader');
                 const content = document.getElementById('content');
                 const donateButton = document.getElementById('donate-button');
+                const languageButton = document.getElementById('language-button');
 
                 loader.style.opacity = '0';
                 setTimeout(() => {
@@ -243,6 +246,7 @@
                     content.style.display = 'block';
                     content.classList.add('loaded');  // Ensure the content is shown
                     donateButton.classList.add("visible");  // Show the donate button
+                    languageButton.style.display = 'block';  // Show the language button
                 }, 500);
             }, 3000); // Wait for 3 seconds before showing content
         };
