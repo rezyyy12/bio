@@ -63,31 +63,17 @@
             opacity: 1;
         }
 
-        /* Typing effect */
-        #typed-text {
-            display: inline-block;
-            border-right: 3px solid white;
-            white-space: nowrap;
-            overflow: hidden;
-            font-size: 1.5em;
-            max-width: 90%;
-            min-height: 1.5em;
+        /* Main Text */
+        #main-text {
+            font-size: 2em;
+            margin-bottom: 20px;
         }
 
         /* Mobile adaptation */
         @media (max-width: 480px) {
-            #typed-text {
-                font-size: 1.2em;
+            #main-text {
+                font-size: 1.5em;
             }
-        }
-
-        /* Blinking cursor */
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
-        #typed-text.blinking {
-            animation: blink 0.6s infinite;
         }
 
         .social-links {
@@ -151,7 +137,7 @@
 
     <!-- Main content -->
     <div id="content">
-        <h1><span id="typed-text"></span></h1>
+        <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
             <a class="button" href="https://t.me/the_rezyyy">telegram</a>
@@ -174,41 +160,10 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     content.style.display = 'block';
-                    startTypingEffect();
+                    document.getElementById("donate-button").classList.add("visible");
                 }, 500);
             }, 3000);
         };
-
-        function startTypingEffect() {
-            const text1 = "hello my name is rezyyy";
-            const text2 = "you can find me here";
-            const typedText = document.getElementById("typed-text");
-            let index1 = 0;
-            let index2 = 0;
-
-            // Typing effect for first text
-            function typeFirst() {
-                if (index1 < text1.length) {
-                    typedText.innerHTML = text1.substring(0, index1 + 1) + '<span style="border-right: 3px solid white;">&nbsp;</span>';
-                    index1++;
-                    setTimeout(typeFirst, 80);
-                } else {
-                    typedText.classList.add("blinking");
-                    typedText.innerHTML = text1;
-                    setTimeout(typeSecond, 500); // Delay before second text starts
-                }
-            }
-
-            // Typing effect for second text
-            function typeSecond() {
-                const paragraph = document.querySelector('p');
-                paragraph.innerHTML = text2;
-                document.getElementById("content").classList.add("loaded");
-                document.getElementById("donate-button").classList.add("visible");
-            }
-
-            typeFirst();
-        }
     </script>
 </body>
 </html>
