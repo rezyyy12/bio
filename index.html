@@ -18,6 +18,52 @@
             overflow: hidden;
         }
 
+        /* Экран загрузки */
+        #loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 10px;
+            z-index: 9999;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: white;
+            border-radius: 50%;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+        }
+
+        /* Контент */
+        #content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        #content.loaded {
+            display: block;
+            opacity: 1;
+        }
+
         /* Модальное окно */
         #warning-modal {
             position: fixed;
@@ -45,13 +91,7 @@
             padding: 25px;
             border-radius: 15px;
             text-align: center;
-            max-width: 80%;
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-
-        #modal-text {
-            font-size: 1.2em;
-            margin-bottom: 15px;
         }
 
         /* Красивая кнопка OK */
@@ -75,23 +115,6 @@
             box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
 
-        /* Кнопка закрытия */
-        .close-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5em;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .close-button:hover {
-            transform: scale(1.2);
-        }
-
         /* Социальные кнопки */
         .button {
             display: inline-block;
@@ -110,19 +133,9 @@
             box-shadow: 0 3px 8px rgba(0, 136, 204, 0.5);
         }
 
-        .button.telegram:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #006699, #004466);
-        }
-
         .button.tiktok {
             background: linear-gradient(45deg, #ff0050, #cc003d);
             box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
-        }
-
-        .button.tiktok:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #cc003d, #99002a);
         }
 
         /* Код-стиль текста */
@@ -130,8 +143,6 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
             margin-top: 30px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
             background-color: #222;
             padding: 20px;
             border-radius: 10px;
@@ -142,9 +153,14 @@
 </head>
 <body>
 
-    <!-- Предупреждение перед переходом -->
-    <div id="warning-modal">
-        <div id="modal-content">
-            <button class="close-button" id="cancel-telegram">&times;</button>
-            <p id="modal-text">you are about to open telegram<br>please be careful when sharing information</p>
-            <button class="ok-button"
+    <!-- Экран загрузки -->
+    <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <!-- Контент -->
+    <div id="content">
+        <h1>hello my name is rezyyy</h1>
+        <p
