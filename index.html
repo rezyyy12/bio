@@ -29,8 +29,8 @@
         }
 
         .dot {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             background-color: white;
             border-radius: 50%;
             animation: bounce 1.5s infinite ease-in-out;
@@ -46,7 +46,7 @@
 
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
+            40% { transform: translateY(-10px); }
         }
 
         /* Контент */
@@ -69,7 +69,15 @@
             border-right: 3px solid white;
             white-space: nowrap;
             overflow: hidden;
-            font-size: 2em;
+            font-size: 1.5em; /* Уменьшил текст */
+            max-width: 90%;
+        }
+
+        /* Адаптация под мобильные устройства */
+        @media (max-width: 480px) {
+            #typed-text {
+                font-size: 1.2em; /* Еще меньше на телефонах */
+            }
         }
 
         /* Моргающий курсор */
@@ -88,9 +96,9 @@
         /* Кнопки */
         .button, .donate-button {
             display: inline-block;
-            margin: 15px;
-            padding: 15px 30px;
-            font-size: 1.3em;
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 1em;
             font-weight: bold;
             text-decoration: none;
             color: white;
@@ -100,27 +108,27 @@
 
         .button {
             background: linear-gradient(45deg, #ff6600, #ff3300);
-            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
+            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
         }
 
         .button:hover {
-            transform: scale(1.07);
+            transform: scale(1.05);
             background: linear-gradient(45deg, #ff3300, #cc0000);
         }
 
         .donate-button {
             background: linear-gradient(45deg, #ffcc00, #ffaa00);
-            box-shadow: 0 4px 10px rgba(255, 204, 0, 0.5);
+            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
         }
 
         .donate-button:hover {
-            transform: scale(1.07);
+            transform: scale(1.05);
             background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
         /* Увеличение заголовков и текста для удобства на мобильных */
         p {
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
 
         #donate-button {
@@ -181,7 +189,7 @@
                 if (index < text.length) {
                     typedText.innerHTML += text.charAt(index);
                     index++;
-                    setTimeout(type, 100);
+                    setTimeout(type, 80);
                 } else {
                     typedText.classList.add("blinking"); // Запускаем мигающий курсор после окончания печати
                     document.getElementById("content").classList.add("loaded");
