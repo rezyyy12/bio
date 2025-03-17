@@ -14,7 +14,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: black; /* Черный фон */
+            background-color: #111; /* Сделал фон чуть ярче */
         }
         #loader {
             position: fixed;
@@ -22,11 +22,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 9999;
-            transition: opacity 1s ease;
+            transition: opacity 1s ease, visibility 1s ease;
         }
         #loader img {
-            width: 100px; /* Размер логотипа */
-            animation: rotate 2s linear infinite; /* Анимация вращения */
+            width: 100px;
+            animation: rotate 2s linear infinite;
         }
         @keyframes rotate {
             100% {
@@ -47,18 +47,22 @@
         .social-links {
             margin-top: 30px;
         }
-        .social-links a {
+        .button {
             display: inline-block;
             margin: 10px;
-            padding: 15px 30px;
-            background-color: #333;
-            color: white;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
             text-decoration: none;
-            border-radius: 25px;
-            transition: background-color 0.3s ease;
+            color: white;
+            background: linear-gradient(45deg, #ff6600, #ff3300);
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
         }
-        .social-links a:hover {
-            background-color: #555;
+        .button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
         }
         h1 {
             font-size: 1.8em;
@@ -66,49 +70,62 @@
         p {
             font-size: 1em;
         }
-        .social-links a {
-            font-size: 0.9em;
-        }
         #donate-button {
-            margin-bottom: 20px;
+            margin-top: 20px;
             display: none;
         }
         #donate-button.visible {
             display: block;
         }
+        .donate-button {
+            display: inline-block;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 204, 0, 0.5);
+        }
+        .donate-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ffaa00, #ff8800);
+        }
     </style>
 </head>
 <body>
     <div id="loader">
-        <img src="your-logo.png" alt="Загрузка..."> </div>
+        <img src="your-logo.png" alt="Загрузка..."> 
+    </div>
     <div id="content">
         <h1>Привет! Меня зовут rezyyy</h1>
         <p>Здесь вы можете найти меня:</p>
         <div class="social-links">
-            <a href="https://t.me/the_rezyyy">Telegram</a>
-            <a href="https://www.tiktok.com/@rezyyy_ts?_t=ZS-8ujSiZeYy8Y&_r=1">TikTok</a>
+            <a class="button" href="https://t.me/the_rezyyy">Telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">TikTok</a>
         </div>
     </div>
     <div id="donate-button">
-        <a href="https://t.me/send?start=IVZm9Wi245y7" style="background-color: #007bff; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; transition: background-color 0.3s ease;">Донат</a>
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">Донат</a>
     </div>
-    <script>
+    <script defer>
         window.onload = function() {
-            new Promise(resolve => {
-                setTimeout(resolve, 4000);
-            }).then(() => {
+            setTimeout(() => {
                 const loader = document.getElementById('loader');
                 const content = document.getElementById('content');
                 const donateButton = document.getElementById('donate-button');
+
                 loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
                 content.classList.add('loaded');
                 donateButton.classList.add('visible');
-                return new Promise(resolve => {
-                    setTimeout(resolve, 1000);
-                });
-            }).then(() => {
-                loader.style.display = 'none';
-            });
+
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 1000);
+            }, 4000);
         };
     </script>
 </body>
