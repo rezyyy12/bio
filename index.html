@@ -18,27 +18,27 @@
             overflow: hidden;
         }
 
-        /* Кнопка выбора языка */
+        /* Button to choose language (planet style) */
         #language-button {
             position: fixed;
             top: 15px;
             right: 15px;
-            width: 30px;
-            height: 30px;
-            background: url('https://cdn-icons-png.flaticon.com/512/44/44386.png') no-repeat center center;
-            background-size: cover;
+            width: 40px;
+            height: 40px;
+            background-color: #4CAF50;
+            border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         #language-button:hover {
-            transform: scale(1.1);
+            background-color: #45a049;
         }
 
-        /* Меню выбора языка */
+        /* Language menu */
         #language-menu {
             position: fixed;
-            top: 50px;
+            top: 60px;
             right: 15px;
             background: #222;
             border-radius: 8px;
@@ -62,45 +62,20 @@
             background: #444;
         }
 
-        /* Социальные кнопки */
-        .button {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 30px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-        .button.telegram {
-            background: linear-gradient(45deg, #0088cc, #006699);
-        }
-
-        .button.tiktok {
-            background: linear-gradient(45deg, #ff0050, #cc003d);
-        }
-
-        .button.donate {
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
-        }
-
-        /* Экран загрузки */
+        /* Loading animation */
         #loader {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: flex;
-            gap: 10px;
             z-index: 9999;
+            display: flex;
+            gap: 8px;
         }
 
         .dot {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             background-color: white;
             border-radius: 50%;
             animation: bounce 1.5s infinite ease-in-out;
@@ -116,10 +91,10 @@
 
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
+            40% { transform: translateY(-10px); }
         }
 
-        /* Контент */
+        /* Main content */
         #content {
             display: none;
             opacity: 0;
@@ -133,67 +108,154 @@
             opacity: 1;
         }
 
-        /* Дополнительный текст */
-        .extra-text {
+        /* Main Text */
+        #main-text {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        /* Mobile adaptation */
+        @media (max-width: 480px) {
+            #main-text {
+                font-size: 1.5em;
+            }
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        /* Buttons */
+        .button, .donate-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff6600, #ff3300);
+            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
+        }
+
+        .donate-button {
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+        }
+
+        .donate-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ffaa00, #ff8800);
+        }
+
+        p {
+            font-size: 1.1em;
+        }
+
+        #donate-button {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #donate-button.visible {
+            display: block;
+        }
+
+        /* Code font style for the last text */
+        .code-text {
+            font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
             margin-top: 30px;
-            font-family: "Courier New", Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 90%;
         }
     </style>
 </head>
 <body>
-
-    <!-- Кнопка выбора языка -->
+    <!-- Language button (planet) -->
     <div id="language-button"></div>
 
-    <!-- Меню языков -->
+    <!-- Language menu -->
     <div id="language-menu">
         <div class="language-option" data-lang="en">english</div>
         <div class="language-option" data-lang="ru">русский</div>
         <div class="language-option" data-lang="ua">українська</div>
     </div>
 
-    <!-- Экран загрузки -->
+    <!-- Loading animation -->
     <div id="loader">
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
 
-    <!-- Контент -->
+    <!-- Main content -->
     <div id="content">
-        <h1 id="title">hello my name is rezyyy</h1>
-        <p id="subtitle">you can find me here</p>
-
-        <!-- Социальные кнопки -->
-        <div>
-            <a href="https://t.me/the_rezyyy" class="button telegram" id="telegram-link">telegram</a>
-            <a href="https://www.tiktok.com/@rezyyy_ts" class="button tiktok">tiktok</a>
-            <a href="https://t.me/send?start=IVZm9Wi245y7" class="button donate">donate</a>
+        <h1 id="main-text">hello my name is rezyyy</h1>
+        <p>you can find me here</p>
+        <div class="social-links">
+            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
-        <!-- Дополнительный текст -->
-        <p class="extra-text" id="extra-text">
+        <!-- Code-style text -->
+        <div class="code-text">
             i am a coder from russia<br>
-            love everyone<br>
-            peaceful sky above your head
-        </p>
+            i love all of you<br>
+            may peace be upon us and the sky be clear above us
+        </div>
+    </div>
+
+    <div id="donate-button">
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
     </div>
 
     <script>
+        // Load content after a delay
         window.onload = function() {
             setTimeout(() => {
-                document.getElementById("loader").style.display = "none";
-                document.getElementById("content").classList.add("loaded");
-            }, 3000);
+                const loader = document.getElementById('loader');
+                const content = document.getElementById('content');
+                const donateButton = document.getElementById('donate-button');
+
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    content.style.display = 'block';
+                    content.classList.add('loaded');  // Ensure the content is shown
+                    donateButton.classList.add("visible");  // Show the donate button
+                }, 500);
+            }, 3000); // Wait for 3 seconds before showing content
         };
 
-        // Языковое меню
+        // Toggle language menu
         document.getElementById("language-button").addEventListener("click", function() {
             document.getElementById("language-menu").classList.toggle("active");
         });
 
-        // Переключение языка
+        // Close language menu if clicked outside
+        document.body.addEventListener("click", function(event) {
+            if (!event.target.closest('#language-button') && !event.target.closest('#language-menu')) {
+                document.getElementById("language-menu").classList.remove("active");
+            }
+        });
+
+        // Change content language
         document.querySelectorAll(".language-option").forEach(option => {
             option.addEventListener("click", function() {
                 const lang = option.getAttribute("data-lang");
@@ -202,32 +264,30 @@
             });
         });
 
-        // Установка языка
         function setLanguage(lang) {
             if (lang === "ru") {
-                document.getElementById("title").innerText = "привет меня зовут rezyyy";
-                document.getElementById("subtitle").innerText = "вы можете найти меня здесь";
-                document.getElementById("telegram-link").innerText = "телеграм";
-                document.getElementById("tiktok-link").innerText = "тик-ток";
-                document.getElementById("donate-link").innerText = "донат";
-                document.getElementById("extra-text").innerHTML = "я кодер из россии<br>люблю всех<br>мирного неба над головой";
+                document.getElementById("main-text").innerText = "привет меня зовут rezyyy";
+                document.querySelector("p").innerText = "вы можете найти меня здесь";
+                document.querySelectorAll(".button")[0].innerText = "телеграм";
+                document.querySelectorAll(".button")[1].innerText = "тик-ток";
+                document.querySelector(".donate-button").innerText = "донат";
+                document.querySelector(".code-text").innerHTML = "я кодер из россии<br>люблю всех<br>мирного неба над головой";
             } else if (lang === "ua") {
-                document.getElementById("title").innerText = "привіт мене звати rezyyy";
-                document.getElementById("subtitle").innerText = "ви можете знайти мене тут";
-                document.getElementById("telegram-link").innerText = "телеграм";
-                document.getElementById("tiktok-link").innerText = "тік-ток";
-                document.getElementById("donate-link").innerText = "донат";
-                document.getElementById("extra-text").innerHTML = "я кодер з україни<br>люблю всіх<br>мирного неба над головою";
+                document.getElementById("main-text").innerText = "привіт мене звати rezyyy";
+                document.querySelector("p").innerText = "ви можете знайти мене тут";
+                document.querySelectorAll(".button")[0].innerText = "телеграм";
+                document.querySelectorAll(".button")[1].innerText = "тік-ток";
+                document.querySelector(".donate-button").innerText = "донат";
+                document.querySelector(".code-text").innerHTML = "я кодер з україни<br>люблю всіх<br>мирного неба над головою";
             } else {
-                document.getElementById("title").innerText = "hello my name is rezyyy";
-                document.getElementById("subtitle").innerText = "you can find me here";
-                document.getElementById("telegram-link").innerText = "telegram";
-                document.getElementById("tiktok-link").innerText = "tiktok";
-                document.getElementById("donate-link").innerText = "donate";
-                document.getElementById("extra-text").innerHTML = "i am a coder from russia<br>love everyone<br>peaceful sky above your head";
+                document.getElementById("main-text").innerText = "hello my name is rezyyy";
+                document.querySelector("p").innerText = "you can find me here";
+                document.querySelectorAll(".button")[0].innerText = "telegram";
+                document.querySelectorAll(".button")[1].innerText = "tiktok";
+                document.querySelector(".donate-button").innerText = "donate";
+                document.querySelector(".code-text").innerHTML = "i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us";
             }
         }
     </script>
-
 </body>
 </html>
