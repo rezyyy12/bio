@@ -64,6 +64,41 @@
             opacity: 1;
         }
 
+        /* Социальные кнопки */
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .button.telegram {
+            background: linear-gradient(45deg, #0088cc, #006699);
+            box-shadow: 0 3px 8px rgba(0, 136, 204, 0.5);
+        }
+
+        .button.tiktok {
+            background: linear-gradient(45deg, #ff0050, #cc003d);
+            box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
+        }
+
+        /* Код-стиль текста */
+        .code-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
+            margin-top: 30px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 90%;
+        }
+
         /* Модальное окно */
         #warning-modal {
             position: fixed;
@@ -114,41 +149,6 @@
             background: linear-gradient(45deg, #43A047, #1B5E20);
             box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
-
-        /* Социальные кнопки */
-        .button {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 30px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-        .button.telegram {
-            background: linear-gradient(45deg, #0088cc, #006699);
-            box-shadow: 0 3px 8px rgba(0, 136, 204, 0.5);
-        }
-
-        .button.tiktok {
-            background: linear-gradient(45deg, #ff0050, #cc003d);
-            box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
-        }
-
-        /* Код-стиль текста */
-        .code-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2em;
-            margin-top: 30px;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            max-width: 90%;
-        }
     </style>
 </head>
 <body>
@@ -163,4 +163,48 @@
     <!-- Контент -->
     <div id="content">
         <h1>hello my name is rezyyy</h1>
-        <p
+        <p>you can find me here</p>
+
+        <!-- Социальные кнопки -->
+        <div>
+            <a href="https://t.me/the_rezyyy" class="button telegram" id="telegram-link">telegram</a>
+            <a href="https://www.tiktok.com/@rezyyy_ts" class="button tiktok">tiktok</a>
+        </div>
+
+        <!-- Дополнительный текст -->
+        <div class="code-text">
+            i am a coder from russia  
+            love everyone  
+            peaceful sky above your head
+        </div>
+    </div>
+
+    <!-- Предупреждение перед переходом -->
+    <div id="warning-modal">
+        <div id="modal-content">
+            <p>you are about to open telegram<br>please be careful when sharing information</p>
+            <button class="ok-button" id="ok-button">ok</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("content").classList.add("loaded");
+            }, 3000);
+        };
+
+        document.getElementById("telegram-link").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.getElementById("warning-modal").classList.add("active");
+        });
+
+        document.getElementById("ok-button").addEventListener("click", function() {
+            document.getElementById("warning-modal").classList.remove("active");
+            window.location.href = "https://t.me/the_rezyyy";
+        });
+    </script>
+
+</body>
+</html>
