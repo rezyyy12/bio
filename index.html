@@ -15,69 +15,47 @@
             flex-direction: column;
             min-height: 100vh;
             background-color: #181818;
+            overflow: hidden;
         }
 
-        /* Loading animation */
-        #loader {
+        /* Warning Modal */
+        #warning-modal {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: white;
-            border-radius: 50%;
-            animation: bounce 1.5s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-        }
-
-        /* Main content */
-        #content {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        #modal-content {
+            background: #222;
             padding: 20px;
-            flex-grow: 1;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 80%;
         }
 
-        #content.loaded {
-            display: block;
-            opacity: 1;
+        .modal-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: white;
+            border-radius: 5px;
         }
 
-        /* Main Text */
-        #main-text {
-            font-size: 2em;
-            margin-bottom: 20px;
+        .continue-button {
+            background-color: #28a745;
         }
 
-        /* Mobile adaptation */
-        @media (max-width: 480px) {
-            #main-text {
-                font-size: 1.5em;
-            }
-        }
-
-        .social-links {
-            margin-top: 30px;
+        .cancel-button {
+            background-color: #dc3545;
         }
 
         /* Buttons */
@@ -113,19 +91,6 @@
             background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
-        p {
-            font-size: 1.1em;
-        }
-
-        #donate-button {
-            margin-top: 20px;
-            display: none;
-        }
-
-        #donate-button.visible {
-            display: block;
-        }
-
         /* Code font style for the last text */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
@@ -142,11 +107,13 @@
     </style>
 </head>
 <body>
-    <!-- Loading animation -->
-    <div id="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+    <!-- Warning Modal -->
+    <div id="warning-modal">
+        <div id="modal-content">
+            <p>you are about to open telegram<br>please be careful when sharing information</p>
+            <button class="modal-button continue-button" id="confirm-telegram">continue</button>
+            <button class="modal-button cancel-button" id="cancel-telegram">cancel</button>
+        </div>
     </div>
 
     <!-- Main content -->
@@ -154,7 +121,7 @@
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
+            <a class="button" href="#" id="telegram-link">telegram</a>
             <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
@@ -170,22 +137,19 @@
         <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
     </div>
 
-    <script defer>
-        window.onload = function() {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                const content = document.getElementById('content');
-                const donateButton = document.getElementById('donate-button');
+    <script>
+        document.getElementById('telegram-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('warning-modal').style.display = 'flex';
+        });
 
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    content.style.display = 'block';
-                    content.classList.add('loaded');  // Ensure the content is shown
-                    donateButton.classList.add("visible");  // Show the donate button
-                }, 500);
-            }, 3000); // Wait for 3 seconds before showing content
-        };
+        document.getElementById('confirm-telegram').addEventListener('click', function() {
+            window.location.href = "https://t.me/the_rezyyy";
+        });
+
+        document.getElementById('cancel-telegram').addEventListener('click', function() {
+            document.getElementById('warning-modal').style.display = 'none';
+        });
     </script>
 </body>
 </html>
