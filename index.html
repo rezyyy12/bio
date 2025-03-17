@@ -18,7 +18,7 @@
             overflow: hidden;
         }
 
-        /* Modal Animation */
+        /* Модальное окно */
         #warning-modal {
             position: fixed;
             top: 0;
@@ -43,7 +43,7 @@
         #modal-content {
             background: #222;
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
             max-width: 80%;
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
@@ -54,25 +54,28 @@
             margin-bottom: 15px;
         }
 
-        /* "OK" Button */
+        /* Красивая кнопка OK */
         .ok-button {
-            background: linear-gradient(45deg, #28a745, #1f8a31);
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
             border: none;
             padding: 12px 30px;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: bold;
             color: white;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.3s ease;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            outline: none;
         }
 
         .ok-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #1f8a31, #146c23);
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #43A047, #1B5E20);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
 
-        /* Close Icon */
+        /* Кнопка закрытия */
         .close-button {
             position: absolute;
             top: 15px;
@@ -89,7 +92,7 @@
             transform: scale(1.2);
         }
 
-        /* Social Buttons */
+        /* Социальные кнопки */
         .button {
             display: inline-block;
             margin: 10px;
@@ -122,7 +125,7 @@
             background: linear-gradient(45deg, #cc003d, #99002a);
         }
 
-        /* Code text style */
+        /* Код-стиль текста */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
@@ -139,56 +142,9 @@
 </head>
 <body>
 
-    <!-- Warning Modal -->
+    <!-- Предупреждение перед переходом -->
     <div id="warning-modal">
         <div id="modal-content">
             <button class="close-button" id="cancel-telegram">&times;</button>
             <p id="modal-text">you are about to open telegram<br>please be careful when sharing information</p>
-            <button class="ok-button" id="confirm-telegram">ok</button>
-        </div>
-    </div>
-
-    <!-- Main content -->
-    <div id="content">
-        <h1 id="main-text">hello my name is rezyyy</h1>
-        <p>you can find me here</p>
-        <div class="social-links">
-            <a class="button telegram" href="#" id="telegram-link">telegram</a>
-            <a class="button tiktok" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
-        </div>
-
-        <!-- Code-style text -->
-        <div class="code-text">
-            i am a coder from russia<br>
-            i love all of you<br>
-            may peace be upon us and the sky be clear above us
-        </div>
-    </div>
-
-    <script>
-        // Open warning modal
-        document.getElementById('telegram-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('warning-modal').classList.add('active');
-        });
-
-        // Confirm and redirect to Telegram
-        document.getElementById('confirm-telegram').addEventListener('click', function() {
-            window.location.href = "https://t.me/the_rezyyy";
-        });
-
-        // Close warning modal
-        document.getElementById('cancel-telegram').addEventListener('click', function() {
-            document.getElementById('warning-modal').classList.remove('active');
-        });
-
-        // Close modal by clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === document.getElementById('warning-modal')) {
-                document.getElementById('warning-modal').classList.remove('active');
-            }
-        });
-    </script>
-
-</body>
-</html>
+            <button class="ok-button"
