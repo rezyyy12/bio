@@ -160,9 +160,10 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     content.style.display = 'block';
-                    document.getElementById("donate-button").classList.add("visible");
+                    content.classList.add('loaded');  // Ensure the content is shown
+                    donateButton.classList.add("visible");  // Show the donate button
                 }, 500);
-            }, 3000);
+            }, 3000); // Wait for 3 seconds before showing content
         };
     </script>
 </body>
