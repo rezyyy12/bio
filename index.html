@@ -180,24 +180,34 @@
         };
 
         function startTypingEffect() {
-            const text = "hello my name is rezyyy";
+            const text1 = "hello my name is rezyyy";
+            const text2 = "you can find me here";
             const typedText = document.getElementById("typed-text");
-            let index = 0;
+            let index1 = 0;
+            let index2 = 0;
 
-            function type() {
-                if (index < text.length) {
-                    typedText.innerHTML = text.substring(0, index + 1) + '<span style="border-right: 3px solid white;">&nbsp;</span>';
-                    index++;
-                    setTimeout(type, 80);
+            // Typing effect for first text
+            function typeFirst() {
+                if (index1 < text1.length) {
+                    typedText.innerHTML = text1.substring(0, index1 + 1) + '<span style="border-right: 3px solid white;">&nbsp;</span>';
+                    index1++;
+                    setTimeout(typeFirst, 80);
                 } else {
                     typedText.classList.add("blinking");
-                    typedText.innerHTML = text;
-                    document.getElementById("content").classList.add("loaded");
-                    document.getElementById("donate-button").classList.add("visible");
+                    typedText.innerHTML = text1;
+                    setTimeout(typeSecond, 500); // Delay before second text starts
                 }
             }
 
-            type();
+            // Typing effect for second text
+            function typeSecond() {
+                const paragraph = document.querySelector('p');
+                paragraph.innerHTML = text2;
+                document.getElementById("content").classList.add("loaded");
+                document.getElementById("donate-button").classList.add("visible");
+            }
+
+            typeFirst();
         }
     </script>
 </body>
