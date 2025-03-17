@@ -18,6 +18,75 @@
             overflow: hidden;
         }
 
+        /* Кнопка выбора языка */
+        #language-button {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: url('https://cdn-icons-png.flaticon.com/512/44/44386.png') no-repeat center center;
+            background-size: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #language-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Меню выбора языка */
+        #language-menu {
+            position: fixed;
+            top: 50px;
+            right: 15px;
+            background: #222;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        #language-menu.active {
+            display: flex;
+        }
+
+        .language-option {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        .language-option:hover {
+            background: #444;
+        }
+
+        /* Социальные кнопки */
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .button.telegram {
+            background: linear-gradient(45deg, #0088cc, #006699);
+        }
+
+        .button.tiktok {
+            background: linear-gradient(45deg, #ff0050, #cc003d);
+        }
+
+        .button.donate {
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+        }
+
         /* Экран загрузки */
         #loader {
             position: fixed;
@@ -64,93 +133,25 @@
             opacity: 1;
         }
 
-        /* Социальные кнопки */
-        .button {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 30px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-        .button.telegram {
-            background: linear-gradient(45deg, #0088cc, #006699);
-            box-shadow: 0 3px 8px rgba(0, 136, 204, 0.5);
-        }
-
-        .button.tiktok {
-            background: linear-gradient(45deg, #ff0050, #cc003d);
-            box-shadow: 0 3px 8px rgba(255, 0, 80, 0.5);
-        }
-
-        .button.donate {
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
-            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
-        }
-
-        /* Стиль для дополнительного текста */
+        /* Дополнительный текст */
         .extra-text {
             font-size: 1.2em;
             margin-top: 30px;
-        }
-
-        /* Модальное окно */
-        #warning-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            z-index: 9999;
-        }
-
-        #warning-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #modal-content {
-            background: #222;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Красивая кнопка OK */
-        .ok-button {
-            background: linear-gradient(45deg, #4CAF50, #2E7D32);
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: white;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-            outline: none;
-        }
-
-        .ok-button:hover {
-            transform: scale(1.1);
-            background: linear-gradient(45deg, #43A047, #1B5E20);
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+            font-family: "Courier New", Courier, monospace;
         }
     </style>
 </head>
 <body>
+
+    <!-- Кнопка выбора языка -->
+    <div id="language-button"></div>
+
+    <!-- Меню языков -->
+    <div id="language-menu">
+        <div class="language-option" data-lang="en">english</div>
+        <div class="language-option" data-lang="ru">русский</div>
+        <div class="language-option" data-lang="ua">українська</div>
+    </div>
 
     <!-- Экран загрузки -->
     <div id="loader">
@@ -161,8 +162,8 @@
 
     <!-- Контент -->
     <div id="content">
-        <h1>hello my name is rezyyy</h1>
-        <p>you can find me here</p>
+        <h1 id="title">hello my name is rezyyy</h1>
+        <p id="subtitle">you can find me here</p>
 
         <!-- Социальные кнопки -->
         <div>
@@ -172,19 +173,11 @@
         </div>
 
         <!-- Дополнительный текст -->
-        <p class="extra-text">
+        <p class="extra-text" id="extra-text">
             i am a coder from russia<br>
             love everyone<br>
             peaceful sky above your head
         </p>
-    </div>
-
-    <!-- Предупреждение перед переходом -->
-    <div id="warning-modal">
-        <div id="modal-content">
-            <p>you are about to open telegram<br>please be careful when sharing information</p>
-            <button class="ok-button" id="ok-button">ok</button>
-        </div>
     </div>
 
     <script>
@@ -195,15 +188,45 @@
             }, 3000);
         };
 
-        document.getElementById("telegram-link").addEventListener("click", function(event) {
-            event.preventDefault();
-            document.getElementById("warning-modal").classList.add("active");
+        // Языковое меню
+        document.getElementById("language-button").addEventListener("click", function() {
+            document.getElementById("language-menu").classList.toggle("active");
         });
 
-        document.getElementById("ok-button").addEventListener("click", function() {
-            document.getElementById("warning-modal").classList.remove("active");
-            window.location.href = "https://t.me/the_rezyyy";
+        // Переключение языка
+        document.querySelectorAll(".language-option").forEach(option => {
+            option.addEventListener("click", function() {
+                const lang = option.getAttribute("data-lang");
+                setLanguage(lang);
+                document.getElementById("language-menu").classList.remove("active");
+            });
         });
+
+        // Установка языка
+        function setLanguage(lang) {
+            if (lang === "ru") {
+                document.getElementById("title").innerText = "привет меня зовут rezyyy";
+                document.getElementById("subtitle").innerText = "вы можете найти меня здесь";
+                document.getElementById("telegram-link").innerText = "телеграм";
+                document.getElementById("tiktok-link").innerText = "тик-ток";
+                document.getElementById("donate-link").innerText = "донат";
+                document.getElementById("extra-text").innerHTML = "я кодер из россии<br>люблю всех<br>мирного неба над головой";
+            } else if (lang === "ua") {
+                document.getElementById("title").innerText = "привіт мене звати rezyyy";
+                document.getElementById("subtitle").innerText = "ви можете знайти мене тут";
+                document.getElementById("telegram-link").innerText = "телеграм";
+                document.getElementById("tiktok-link").innerText = "тік-ток";
+                document.getElementById("donate-link").innerText = "донат";
+                document.getElementById("extra-text").innerHTML = "я кодер з україни<br>люблю всіх<br>мирного неба над головою";
+            } else {
+                document.getElementById("title").innerText = "hello my name is rezyyy";
+                document.getElementById("subtitle").innerText = "you can find me here";
+                document.getElementById("telegram-link").innerText = "telegram";
+                document.getElementById("tiktok-link").innerText = "tiktok";
+                document.getElementById("donate-link").innerText = "donate";
+                document.getElementById("extra-text").innerHTML = "i am a coder from russia<br>love everyone<br>peaceful sky above your head";
+            }
+        }
     </script>
 
 </body>
