@@ -1,4 +1,4 @@
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
             background-color: #181818;
         }
 
-        /* Экран загрузки */
+        /* Loading screen */
         #loader {
             position: fixed;
             top: 50%;
@@ -49,7 +49,7 @@
             40% { transform: translateY(-10px); }
         }
 
-        /* Контент */
+        /* Main content */
         #content {
             display: none;
             opacity: 0;
@@ -63,7 +63,7 @@
             opacity: 1;
         }
 
-        /* Эффект печатной машинки */
+        /* Typing effect */
         #typed-text {
             display: inline-block;
             border-right: 3px solid white;
@@ -71,17 +71,17 @@
             overflow: hidden;
             font-size: 1.5em;
             max-width: 90%;
-            min-height: 1.5em; /* Оставляем место под текст */
+            min-height: 1.5em;
         }
 
-        /* Адаптация под мобильные устройства */
+        /* Mobile adaptation */
         @media (max-width: 480px) {
             #typed-text {
                 font-size: 1.2em;
             }
         }
 
-        /* Моргающий курсор */
+        /* Blinking cursor */
         @keyframes blink {
             50% { border-color: transparent; }
         }
@@ -94,7 +94,7 @@
             margin-top: 30px;
         }
 
-        /* Кнопки */
+        /* Buttons */
         .button, .donate-button {
             display: inline-block;
             margin: 10px;
@@ -142,25 +142,25 @@
     </style>
 </head>
 <body>
-    <!-- Анимация загрузки -->
+    <!-- Loading animation -->
     <div id="loader">
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
 
-    <!-- Основной контент -->
+    <!-- Main content -->
     <div id="content">
         <h1><span id="typed-text"></span></h1>
-        <p>Здесь вы можете найти меня:</p>
+        <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy">Telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">TikTok</a>
+            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
     </div>
 
     <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">Донат</a>
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
     </div>
 
     <script defer>
@@ -181,11 +181,11 @@
         };
 
         function startTypingEffect() {
-            const text = "Привет! Меня зовут rezyyy";
+            const text = "hello my name is rezyyy";
             const typedText = document.getElementById("typed-text");
             let index = 0;
 
-            // Создаем пустой текст перед началом печати
+            // Create empty space before typing starts
             typedText.innerHTML = "&nbsp;";
 
             function type() {
@@ -194,8 +194,8 @@
                     index++;
                     setTimeout(type, 80);
                 } else {
-                    typedText.classList.add("blinking"); // Запускаем мигающий курсор после окончания печати
-                    typedText.innerHTML = text; // Убираем временный курсор
+                    typedText.classList.add("blinking");
+                    typedText.innerHTML = text;
                     document.getElementById("content").classList.add("loaded");
                     document.getElementById("donate-button").classList.add("visible");
                 }
