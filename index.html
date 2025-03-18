@@ -107,6 +107,39 @@
             background: #444;
         }
 
+        /* Buttons */
+        .button, .donate-button {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff6600, #ff3300);
+            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
+        }
+
+        .donate-button {
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+        }
+
+        .donate-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ffaa00, #ff8800);
+        }
+
         /* Footer text */
         .footer-text {
             font-size: 0.8em;
@@ -116,6 +149,34 @@
             position: relative;
             bottom: 10px;
         }
+
+        /* Social media buttons */
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links .button {
+            background: linear-gradient(45deg, #00b5ff, #0085cc);
+        }
+
+        .social-links .button:hover {
+            background: linear-gradient(45deg, #0085cc, #005f7a);
+        }
+
+        /* Code font style for the last text */
+        .code-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
+            margin-top: 30px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 90%;
+        }
+
     </style>
 </head>
 <body>
@@ -128,24 +189,38 @@
 
     <!-- Main content -->
     <div id="content">
-        <!-- Language selection button (appears after loading) -->
-        <button id="language-button"></button>
-        <div id="language-menu">
-            <div class="lang-option" onclick="changeLanguage('en')">English</div>
-            <div class="lang-option" onclick="changeLanguage('ru')">Русский</div>
-            <div class="lang-option" onclick="changeLanguage('ua')">Українська</div>
-        </div>
-
-        <h1 id="title">hello my name is rezyyy</h1>
-        <p id="subtitle">you can find me here</p>
+        <h1 id="main-text">hello my name is rezyyy</h1>
+        <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" id="telegram" href="https://t.me/the_rezyyy">telegram</a>
-            <a class="button" id="tiktok" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
+            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
-        <div class="footer-text">
-            this site is still under development and will continue to improve. with love from rezyyy
+        <!-- Code-style text -->
+        <div class="code-text">
+            i am a coder from russia<br>
+            i love all of you<br>
+            may peace be upon us and the sky be clear above us
         </div>
+
+        <div id="donate-button">
+            <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            this website is still under development and will continue to improve. <br> made with love by rezyyy
+        </div>
+    </div>
+
+    <!-- Language button -->
+    <div id="language-button" onclick="toggleLanguageMenu()"></div>
+
+    <!-- Language menu -->
+    <div id="language-menu">
+        <div class="lang-option" onclick="changeLanguage('ru')">русский</div>
+        <div class="lang-option" onclick="changeLanguage('en')">english</div>
+        <div class="lang-option" onclick="changeLanguage('uk')">українська</div>
     </div>
 
     <script>
@@ -153,6 +228,7 @@
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 const content = document.getElementById('content');
+                const donateButton = document.getElementById('donate-button');
                 const languageButton = document.getElementById('language-button');
 
                 loader.style.opacity = '0';
@@ -160,38 +236,45 @@
                     loader.style.display = 'none';
                     content.style.display = 'block';
                     content.classList.add('loaded');
-                    languageButton.style.display = 'block'; // Show language button
+                    donateButton.classList.add("visible");
+                    languageButton.style.display = 'block';  // Show language button after content load
                 }, 500);
-            }, 3000);
+            }, 3000); // Wait for 3 seconds before showing content
         };
 
-        // Language menu toggle
-        document.getElementById('language-button').addEventListener('click', function() {
-            document.getElementById('language-menu').style.display = 
-                document.getElementById('language-menu').style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close language menu if clicked outside
-        document.addEventListener('click', function(event) {
+        function toggleLanguageMenu() {
             const menu = document.getElementById('language-menu');
-            const button = document.getElementById('language-button');
-            if (!menu.contains(event.target) && event.target !== button) {
-                menu.style.display = 'none';
-            }
-        });
+            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+        }
 
-        // Language change
         function changeLanguage(lang) {
-            const texts = {
-                en: ["hello my name is rezyyy", "you can find me here", "telegram", "tiktok"],
-                ru: ["привет меня зовут rezyyy", "ты можешь найти меня здесь", "телеграм", "тик-ток"],
-                ua: ["привіт мене звати rezyyy", "ти можеш знайти мене тут", "телеграм", "тікток"]
-            };
-            document.getElementById('title').innerHTML = texts[lang][0];
-            document.getElementById('subtitle').innerHTML = texts[lang][1];
-            document.getElementById('telegram').innerHTML = texts[lang][2];
-            document.getElementById('tiktok').innerHTML = texts[lang][3];
-            document.getElementById('language-menu').style.display = 'none';
+            const mainText = document.getElementById('main-text');
+            const donateButton = document.querySelector('.donate-button');
+            const footerText = document.querySelector('.footer-text');
+            const telegramLink = document.querySelector('a[href="https://t.me/the_rezyyy"]');
+            const tiktokLink = document.querySelector('a[href="https://www.tiktok.com/@rezyyy_ts"]');
+
+            if (lang === 'ru') {
+                mainText.innerText = 'Привет, меня зовут rezyyy';
+                donateButton.innerText = 'Пожертвовать';
+                footerText.innerText = 'Этот сайт ещё в разработке и будет продолжать улучшаться. Сделано с любовью от rezyyy';
+                telegramLink.innerText = 'телеграм';
+                tiktokLink.innerText = 'тик-ток';
+            } else if (lang === 'en') {
+                mainText.innerText = 'hello my name is rezyyy';
+                donateButton.innerText = 'donate';
+                footerText.innerText = 'This website is still under development and will continue to improve. Made with love by rezyyy';
+                telegramLink.innerText = 'telegram';
+                tiktokLink.innerText = 'tiktok';
+            } else if (lang === 'uk') {
+                mainText.innerText = 'Привіт, мене звуть rezyyy';
+                donateButton.innerText = 'Пожертвувати';
+                footerText.innerText = 'Цей сайт ще в розробці і буде продовжувати покращуватись. Зроблено з любов\'ю від rezyyy';
+                telegramLink.innerText = 'телеграм';
+                tiktokLink.innerText = 'тік-ток';
+            }
+
+            document.getElementById('language-menu').style.display = 'none';  // Close language menu
         }
     </script>
 </body>
