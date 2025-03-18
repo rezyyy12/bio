@@ -19,18 +19,6 @@
             overflow: hidden;
         }
 
-        /* Main text */
-        #main-text {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        /* Additional text */
-        #sub-text {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-        }
-
         /* Loading animation */
         #loader {
             position: fixed;
@@ -61,6 +49,18 @@
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-10px); }
+        }
+
+        /* Main text */
+        #main-text {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Additional text */
+        #sub-text {
+            font-size: 1.5em;
+            margin-bottom: 30px;
         }
 
         /* Social links */
@@ -133,8 +133,8 @@
         <div class="dot"></div>
     </div>
 
-    <!-- Main content -->
-    <div id="content">
+    <!-- Main content (Initially hidden) -->
+    <div id="content" style="display:none;">
         <h1 id="main-text">hello</h1> <!-- Initially displays hello -->
         <h2 id="sub-text">my name is rezyyy</h2>
         <p>you can find me here</p>
@@ -173,7 +173,7 @@
             currentWordIndex = (currentWordIndex + 1) % helloWords.length;
         }, 1000);  // Change every second
 
-        // Load content after a delay
+        // Load content after a delay (simulating loading screen)
         window.onload = function() {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
@@ -182,8 +182,8 @@
 
                 loader.style.opacity = '0';
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                    content.style.display = 'block';
+                    loader.style.display = 'none';  // Hide loader
+                    content.style.display = 'block';  // Show main content
                     content.classList.add('loaded');
                     donateButton.classList.add("visible");
                 }, 500);
