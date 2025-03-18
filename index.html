@@ -23,11 +23,15 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: linear-gradient(45deg, #181818, #2a2a2a, #181818, #2a2a2a);
-            background-size: 400%;
-            animation: gradientShift 15s ease infinite;
+            background: var(--bg-color); /* Устанавливаем базовый фон сразу */
+            transition: background 0.5s ease;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* Убираем белый фон на старте */
+        html {
+            background: var(--bg-color);
         }
 
         .stars {
@@ -52,19 +56,13 @@
             50% { opacity: 1; }
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-color);
+            background: var(--bg-color); /* Фон загрузчика совпадает с body */
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -94,12 +92,12 @@
             padding: 20px;
             opacity: 0;
             transition: opacity 0.8s ease;
-            display: none; /* Скрываем до загрузки */
+            display: none;
         }
 
         #content.loaded {
             opacity: 1;
-            display: block; /* Показываем после загрузки */
+            display: block;
         }
 
         #main-text {
@@ -110,11 +108,11 @@
 
         .social-links, #donate-button {
             margin-top: 20px;
-            display: none; /* Скрываем кнопки до загрузки */
+            display: none;
         }
 
         .social-links.loaded, #donate-button.loaded {
-            display: block; /* Показываем после загрузки */
+            display: block;
         }
 
         .button, .donate-button {
@@ -129,6 +127,7 @@
             box-shadow: var(--shadow);
             position: relative;
             animation: pulse 2s infinite ease-in-out;
+            text-decoration: none !important; /* Убираем подчёркивание ссылок */
         }
 
         .button {
@@ -194,8 +193,8 @@
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
+            <a class="button" href="https://t.me/the_rezyyy" target="_blank">telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">tiktok</a>
         </div>
         <div class="code-text">
             i am a coder from russia<br>
@@ -205,7 +204,7 @@
     </div>
 
     <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">donate</a>
     </div>
 
     <script defer>
@@ -231,6 +230,11 @@
 
             createStars();
 
+            // Устанавливаем фон сразу после загрузки DOM
+            document.body.style.background = 'linear-gradient(45deg, #181818, #2a2a2a, #181818, #2a2a2a)';
+            document.body.style.backgroundSize = '400%';
+            document.body.style.animation = 'gradientShift 15s ease infinite';
+
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
@@ -240,6 +244,16 @@
                     donateButton.classList.add('loaded');
                 }, 500);
             }, 2000);
+        });
+
+        // Предотвращаем мигание при клике
+        document.querySelectorAll('.button, .donate-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // Блокируем дефолтное поведение
+                setTimeout(() => {
+                    window.location.href = button.getAttribute('href'); // Переход после задержки
+                }, 100);
+            });
         });
     </script>
 </body>
