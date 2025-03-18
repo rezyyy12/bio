@@ -3,17 +3,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rezyyy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f5f5f5;
-            --text-color: #1a1a1a;
-            --accent-color: #ff6b6b;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
+            --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
+            --bg-color: #181818;
+            --text-color: #fff;
+            --shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -26,6 +26,7 @@
             overflow-x: hidden;
         }
 
+        /* Loading Animation */
         #loader {
             position: fixed;
             top: 50%;
@@ -39,11 +40,11 @@
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
+            width: 12px;
+            height: 12px;
+            background-color: var(--text-color);
             border-radius: 50%;
-            animation: bounce 1.2s infinite ease-in-out;
+            animation: bounce 1.4s infinite ease-in-out;
         }
 
         .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -51,14 +52,15 @@
 
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
+            40% { transform: translateY(-12px); }
         }
 
+        /* Main Content */
         #content {
             flex-grow: 1;
             padding: 20px;
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.8s ease;
         }
 
         #content.loaded {
@@ -66,57 +68,66 @@
         }
 
         #main-text {
-            font-size: clamp(1.8em, 6vw, 2.5em);
-            margin-bottom: 15px;
-            font-weight: 700;
-            color: var(--text-color);
+            font-size: clamp(1.5em, 5vw, 2em);
+            margin-bottom: 20px;
         }
 
         .social-links, #donate-button {
             margin-top: 20px;
         }
 
-        .button {
-            display: inline-flex;
-            padding: 10px 20px;
+        .button, .donate-button {
+            display: inline-block;
+            padding: 12px 25px;
             font-size: 1em;
-            font-weight: 500;
+            font-weight: bold;
             text-decoration: none;
             color: var(--text-color);
-            background-color: #fff;
-            border: 1px solid var(--accent-color);
-            border-radius: 25px;
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            margin: 0 10px;
+        }
+
+        .button {
+            background: var(--primary-gradient);
         }
 
         .button:hover {
-            transform: translateY(-2px);
-            background-color: var(--accent-color);
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
+        }
+
+        .donate-button {
+            background: var(--secondary-gradient);
+        }
+
+        .donate-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
         .code-text {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1em;
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            max-width: 85%;
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            max-width: 90%;
             margin-left: auto;
             margin-right: auto;
             word-wrap: break-word;
-            box-shadow: var(--shadow);
-            color: var(--text-color);
         }
 
+        /* Mobile Optimization */
         @media (max-width: 480px) {
-            #main-text { font-size: clamp(1.5em, 5vw, 2em); }
-            .button { padding: 8px 16px; font-size: 0.9em; margin: 0 5px; }
-            .code-text { font-size: 0.95em; padding: 12px; }
+            .button, .donate-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .code-text {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -131,8 +142,8 @@
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy" target="_blank">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">tiktok</a>
+            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
         <div class="code-text">
             i am a coder from russia<br>
@@ -142,7 +153,7 @@
     </div>
 
     <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">donate</a>
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
     </div>
 
     <script defer>
@@ -158,7 +169,7 @@
                     content.classList.add('loaded');
                     donateButton.style.display = 'block';
                 }, 500);
-            }, 2000);
+            }, 2000); // Уменьшил до 2 секунд для оптимизации
         });
     </script>
 </body>
