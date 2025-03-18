@@ -107,6 +107,27 @@
             background: #444;
         }
 
+        /* Social media buttons */
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links .button {
+            background: linear-gradient(45deg, #0088cc, #006699); /* Telegram blue */
+        }
+
+        .social-links .button:hover {
+            background: linear-gradient(45deg, #006699, #004466);
+        }
+
+        .social-links .tiktok-button {
+            background: linear-gradient(45deg, #00b5ff, #0085cc); /* TikTok blue */
+        }
+
+        .social-links .tiktok-button:hover {
+            background: linear-gradient(45deg, #0085cc, #005f7a);
+        }
+
         /* Buttons */
         .button, .donate-button {
             display: inline-block;
@@ -150,19 +171,6 @@
             bottom: 10px;
         }
 
-        /* Social media buttons */
-        .social-links {
-            margin-top: 30px;
-        }
-
-        .social-links .button {
-            background: linear-gradient(45deg, #00b5ff, #0085cc);
-        }
-
-        .social-links .button:hover {
-            background: linear-gradient(45deg, #0085cc, #005f7a);
-        }
-
         /* Code font style for the last text */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
@@ -177,6 +185,15 @@
             max-width: 90%;
         }
 
+        /* Time display */
+        #local-time {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -187,13 +204,16 @@
         <div class="dot"></div>
     </div>
 
+    <!-- Time display -->
+    <div id="local-time"></div>
+
     <!-- Main content -->
     <div id="content">
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
             <a class="button" href="https://t.me/the_rezyyy">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
+            <a class="tiktok-button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
         <!-- Code-style text -->
@@ -240,7 +260,19 @@
                     languageButton.style.display = 'block';  // Show language button after content load
                 }, 500);
             }, 3000); // Wait for 3 seconds before showing content
+
+            // Display local time with seconds
+            setInterval(updateLocalTime, 1000); // Update every second
         };
+
+        function updateLocalTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('local-time').innerText = timeString;
+        }
 
         function toggleLanguageMenu() {
             const menu = document.getElementById('language-menu');
