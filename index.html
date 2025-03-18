@@ -191,18 +191,13 @@
             max-width: 90%;
         }
 
-        /* Text animation for changing "hello" every second */
-        #hello-text {
-            font-size: 3em;
-            font-weight: bold;
-            animation: fadeInOut 1s infinite;
-            margin-top: 50px;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
+        /* Time Display */
+        #time-display {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 0.8em;
+            color: white;
         }
     </style>
 </head>
@@ -213,6 +208,9 @@
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
+
+    <!-- Time display -->
+    <div id="time-display"></div>
 
     <!-- Main content -->
     <div id="content">
@@ -244,12 +242,35 @@
             <div class="language-option" data-lang="ru">Русский</div>
             <div class="language-option" data-lang="ua">Українська</div>
         </div>
-
-        <!-- Animated Hello Text -->
-        <div id="hello-text">hello</div>
     </div>
 
     <script>
+        // Words in different languages
+        const helloWords = [
+            "hello", "hola", "bonjour", "hallo", "ciao", "こんにちは", "안녕하세요", "Здравствуйте", "Olá", "привіт", 
+            "שלום", "مرحبا", "Привет", "Merhaba", "สวัสดี", "नमस्ते", "Hej", "สวัสดีครับ", "Bonjour", "Ahoj",
+            "Zdravo", "Sveiki", "Salam", "Hej", "Labas", "Sawubona", "Kamusta", "Namaste", "Halo", "Hæ", "Γειά σας"
+        ];
+
+        let currentWordIndex = 0;
+
+        // Change hello word every second
+        setInterval(() => {
+            document.getElementById("main-text").innerText = helloWords[currentWordIndex];
+            currentWordIndex = (currentWordIndex + 1) % helloWords.length;
+        }, 1000);  // Change every second
+
+        // Display local time
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById("time-display").innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateTime, 1000);
+
         // Load content after a delay
         window.onload = function() {
             setTimeout(() => {
@@ -314,23 +335,6 @@
                 document.querySelector(".code-text").innerHTML = "i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us";
             }
         }
-
-        // Animated Hello Text
-        const helloTranslations = [
-            "hello", "hola", "bonjour", "ciao", "こんにちは", "안녕하세요", "привет", "مرحبا", "שלום", "สวัสดี", 
-            "नमस्ते", "hola", "hallo", "hej", "hei", "xin chào", "hallo", "szia", "hallo", "merhaba", 
-            "hello", "privet", "salut", "ahoj", "hei", "hola", "selamat pagi", "sawasdee", "hyvää päivää", "trong tôi"
-        ];
-
-        let index = 0;
-        const helloTextElement = document.getElementById("hello-text");
-
-        function changeHello() {
-            helloTextElement.innerText = helloTranslations[index];
-            index = (index + 1) % helloTranslations.length; // Ensure it loops
-        }
-
-        setInterval(changeHello, 1000); // Change every second
     </script>
 </body>
 </html>
