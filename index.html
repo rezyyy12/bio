@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: sans-serif;
+            font-family: 'Roboto', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -22,8 +22,16 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: var(--bg-color);
+            background: linear-gradient(45deg, #181818, #2a2a2a, #181818, #2a2a2a);
+            background-size: 400%;
+            animation: gradientShift 15s ease infinite;
             overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Loading Animation */
@@ -70,6 +78,7 @@
         #main-text {
             font-size: clamp(1.5em, 5vw, 2em);
             margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(255, 102, 0, 0.5);
         }
 
         .social-links, #donate-button {
@@ -86,6 +95,8 @@
             border-radius: 30px;
             transition: transform 0.2s ease, background 0.3s ease;
             box-shadow: var(--shadow);
+            position: relative;
+            animation: pulse 2s infinite ease-in-out;
         }
 
         .button {
@@ -106,6 +117,12 @@
             background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 102, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0); }
+        }
+
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
@@ -117,6 +134,13 @@
             margin-left: auto;
             margin-right: auto;
             word-wrap: break-word;
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .code-text:hover {
+            transform: perspective(1000px) rotateX(0deg);
         }
 
         /* Mobile Optimization */
@@ -169,7 +193,7 @@
                     content.classList.add('loaded');
                     donateButton.style.display = 'block';
                 }, 500);
-            }, 2000); // Уменьшил до 2 секунд для оптимизации
+            }, 2000);
         });
     </script>
 </body>
