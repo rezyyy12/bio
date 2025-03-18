@@ -4,20 +4,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rezyyy</title>
     <style>
+        :root {
+            --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
+            --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
+            --bg-color: #181818;
+            --text-color: #fff;
+            --shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+        }
+
         body {
             font-family: sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            color: white;
+            color: var(--text-color);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #181818;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
         }
 
-        /* Loading animation */
+        /* Loading Animation */
         #loader {
             position: fixed;
             top: 50%;
@@ -26,76 +35,61 @@
             z-index: 9999;
             display: flex;
             gap: 8px;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
 
         .dot {
             width: 12px;
             height: 12px;
-            background-color: white;
+            background-color: var(--text-color);
             border-radius: 50%;
-            animation: bounce 1.5s infinite ease-in-out;
+            animation: bounce 1.4s infinite ease-in-out;
         }
 
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
+            40% { transform: translateY(-12px); }
         }
 
-        /* Main content */
+        /* Main Content */
         #content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-            padding: 20px;
             flex-grow: 1;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
 
         #content.loaded {
-            display: block;
             opacity: 1;
         }
 
-        /* Main Text */
         #main-text {
-            font-size: 2em;
+            font-size: clamp(1.5em, 5vw, 2em);
             margin-bottom: 20px;
         }
 
-        /* Mobile adaptation */
-        @media (max-width: 480px) {
-            #main-text {
-                font-size: 1.5em;
-            }
+        .social-links, #donate-button {
+            margin-top: 20px;
         }
 
-        .social-links {
-            margin-top: 30px;
-        }
-
-        /* Buttons */
         .button, .donate-button {
             display: inline-block;
-            margin: 10px;
             padding: 12px 25px;
             font-size: 1em;
             font-weight: bold;
             text-decoration: none;
-            color: white;
+            color: var(--text-color);
             border-radius: 30px;
             transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: var(--shadow);
         }
 
         .button {
-            background: linear-gradient(45deg, #ff6600, #ff3300);
-            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+            background: var(--primary-gradient);
         }
 
         .button:hover {
@@ -104,8 +98,7 @@
         }
 
         .donate-button {
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
-            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+            background: var(--secondary-gradient);
         }
 
         .donate-button:hover {
@@ -113,43 +106,38 @@
             background: linear-gradient(45deg, #ffaa00, #ff8800);
         }
 
-        p {
-            font-size: 1.1em;
-        }
-
-        #donate-button {
-            margin-top: 20px;
-            display: none;
-        }
-
-        #donate-button.visible {
-            display: block;
-        }
-
-        /* Code font style for the last text */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.2em;
             margin-top: 30px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background-color: #222;
             padding: 20px;
+            background-color: #222;
             border-radius: 10px;
-            display: inline-block;
             max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            word-wrap: break-word;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .button, .donate-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .code-text {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading animation -->
     <div id="loader">
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
 
-    <!-- Main content -->
     <div id="content">
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
@@ -157,8 +145,6 @@
             <a class="button" href="https://t.me/the_rezyyy">telegram</a>
             <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
-
-        <!-- Code-style text -->
         <div class="code-text">
             i am a coder from russia<br>
             i love all of you<br>
@@ -171,21 +157,20 @@
     </div>
 
     <script defer>
-        window.onload = function() {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                const content = document.getElementById('content');
-                const donateButton = document.getElementById('donate-button');
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            const donateButton = document.getElementById('donate-button');
 
+            setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    content.style.display = 'block';
-                    content.classList.add('loaded');  // Ensure the content is shown
-                    donateButton.classList.add("visible");  // Show the donate button
+                    content.classList.add('loaded');
+                    donateButton.style.display = 'block';
                 }, 500);
-            }, 3000); // Wait for 3 seconds before showing content
-        };
+            }, 2000); // Уменьшил до 2 секунд для оптимизации
+        });
     </script>
 </body>
 </html>
