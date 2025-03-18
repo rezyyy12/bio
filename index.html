@@ -191,14 +191,21 @@
             max-width: 90%;
         }
 
-        /* Time Display */
-        #time-display {
+        /* Flag styling */
+        #flag {
+            width: 50px;
+            height: 30px;
+            margin-top: 10px;
+        }
+
+        /* Time Display (removed) */
+        /*#time-display {
             position: fixed;
             top: 10px;
             left: 10px;
             font-size: 0.8em;
             color: white;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -209,12 +216,10 @@
         <div class="dot"></div>
     </div>
 
-    <!-- Time display -->
-    <div id="time-display"></div>
-
     <!-- Main content -->
     <div id="content">
         <h1 id="main-text">hello my name is rezyyy</h1>
+        <img id="flag" src="" alt="Flag">
         <p>you can find me here</p>
         <div class="social-links">
             <a class="button" href="https://t.me/the_rezyyy">telegram</a>
@@ -247,29 +252,47 @@
     <script>
         // Words in different languages
         const helloWords = [
-            "hello", "hola", "bonjour", "hallo", "ciao", "こんにちは", "안녕하세요", "Здравствуйте", "Olá", "привіт", 
-            "שלום", "مرحبا", "Привет", "Merhaba", "สวัสดี", "नमस्ते", "Hej", "สวัสดีครับ", "Bonjour", "Ahoj",
-            "Zdravo", "Sveiki", "Salam", "Hej", "Labas", "Sawubona", "Kamusta", "Namaste", "Halo", "Hæ", "Γειά σας"
+            { word: "hello", flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" }, // English
+            { word: "hola", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/1280px-Flag_of_Spain.svg.png" }, // Spanish
+            { word: "bonjour", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/1280px-Flag_of_France.svg.png" }, // French
+            { word: "hallo", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Flag_of_Germany.svg/1280px-Flag_of_Germany.svg.png" }, // German
+            { word: "ciao", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/1280px-Flag_of_Italy.svg.png" }, // Italian
+            { word: "こんにちは", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png" }, // Japanese
+            { word: "안녕하세요", flag: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_South_Korea.svg" }, // Korean
+            { word: "Здравствуйте", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" }, // Russian
+            { word: "Olá", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Flag_of_Portugal.svg/1280px-Flag_of_Portugal.svg.png" }, // Portuguese
+            { word: "привіт", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/1280px-Flag_of_Ukraine.svg.png" }, // Ukrainian
+            { word: "שלום", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Israel.svg/1280px-Flag_of_Israel.svg.png" }, // Hebrew
+            { word: "مرحبا", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Saudi_Arabia.svg/1280px-Flag_of_Saudi_Arabia.svg.png" }, // Arabic
+            { word: "Привет", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/1280px-Flag_of_Russia.svg.png" }, // Russian
+            { word: "Merhaba", flag: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Flag_of_Turkey.svg" }, // Turkish
+            { word: "สวัสดี", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1280px-Flag_of_Thailand.svg.png" }, // Thai
+            { word: "नमस्ते", flag: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Flag_of_India.svg" }, // Hindi
+            { word: "Hej", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Flag_of_Sweden.svg/1280px-Flag_of_Sweden.svg.png" }, // Swedish
+            { word: "Γειά σας", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/1280px-Flag_of_Greece.svg.png" }, // Greek
+            { word: "Ahoj", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Czech_Republic.svg/1280px-Flag_of_Czech_Republic.svg.png" }, // Czech
+            { word: "Zdravo", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Serbia.svg/1280px-Flag_of_Serbia.svg.png" }, // Serbian
+            { word: "Sveiki", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Latvia.svg/1280px-Flag_of_Latvia.svg.png" }, // Latvian
+            { word: "Salam", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Flag_of_Iran.svg/1280px-Flag_of_Iran.svg.png" }, // Persian
+            { word: "Hej", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Denmark.svg/1280px-Flag_of_Denmark.svg.png" }, // Danish
+            { word: "Labas", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/1280px-Flag_of_Lithuania.svg.png" }, // Lithuanian
+            { word: "Sawubona", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_South_Africa.svg/1280px-Flag_of_South_Africa.svg.png" }, // Zulu
+            { word: "Kamusta", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/1280px-Flag_of_the_Philippines.svg.png" }, // Filipino
+            { word: "Namaste", flag: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Flag_of_India.svg" }, // Hindi
+            { word: "Halo", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/1280px-Flag_of_Indonesia.svg.png" }, // Indonesian
+            { word: "Hæ", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Flag_of_Iceland.svg/1280px-Flag_of_Iceland.svg.png" }, // Icelandic
+            { word: "Γειά σας", flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/1280px-Flag_of_Greece.svg.png" } // Greek
         ];
 
         let currentWordIndex = 0;
 
         // Change hello word every second
         setInterval(() => {
-            document.getElementById("main-text").innerText = helloWords[currentWordIndex];
+            const word = helloWords[currentWordIndex];
+            document.getElementById("main-text").innerText = word.word;
+            document.getElementById("flag").src = word.flag;
             currentWordIndex = (currentWordIndex + 1) % helloWords.length;
         }, 1000);  // Change every second
-
-        // Display local time
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById("time-display").innerText = `${hours}:${minutes}:${seconds}`;
-        }
-
-        setInterval(updateTime, 1000);
 
         // Load content after a delay
         window.onload = function() {
@@ -289,52 +312,6 @@
                 }, 500);
             }, 3000); // Wait for 3 seconds before showing content
         };
-
-        // Toggle language menu
-        document.getElementById("language-button").addEventListener("click", function() {
-            document.getElementById("language-menu").classList.toggle("active");
-        });
-
-        // Close language menu if clicked outside
-        document.body.addEventListener("click", function(event) {
-            if (!event.target.closest('#language-button') && !event.target.closest('#language-menu')) {
-                document.getElementById("language-menu").classList.remove("active");
-            }
-        });
-
-        // Change content language
-        document.querySelectorAll(".language-option").forEach(option => {
-            option.addEventListener("click", function() {
-                const lang = option.getAttribute("data-lang");
-                setLanguage(lang);
-                document.getElementById("language-menu").classList.remove("active");
-            });
-        });
-
-        function setLanguage(lang) {
-            if (lang === "ru") {
-                document.getElementById("main-text").innerText = "привет меня зовут rezyyy";
-                document.querySelector("p").innerText = "вы можете найти меня здесь";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тик-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я программист из россии<br>я вас всех люблю<br>мирного неба над головой";
-            } else if (lang === "ua") {
-                document.getElementById("main-text").innerText = "привіт, мене звати rezyyy";
-                document.querySelector("p").innerText = "ви можете знайти мене тут";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тік-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я програміст з україни<br>я вас всіх люблю<br>мирного неба над головою";
-            } else {
-                document.getElementById("main-text").innerText = "hello my name is rezyyy";
-                document.querySelector("p").innerText = "you can find me here";
-                document.querySelectorAll(".button")[0].innerText = "telegram";
-                document.querySelectorAll(".button")[1].innerText = "tiktok";
-                document.querySelector(".donate-button").innerText = "donate";
-                document.querySelector(".code-text").innerHTML = "i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us";
-            }
-        }
     </script>
 </body>
 </html>
