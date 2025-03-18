@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,56 +15,6 @@
             flex-direction: column;
             min-height: 100vh;
             background-color: #181818;
-            overflow: hidden;
-        }
-
-        /* Button to choose language (simple round, outline only) */
-        #language-button {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-            display: none; /* Initially hidden */
-        }
-
-        #language-button:hover {
-            border-color: #4CAF50;
-        }
-
-        /* Language menu */
-        #language-menu {
-            position: fixed;
-            top: 60px;
-            right: 15px;
-            background: #222;
-            border-radius: 8px;
-            display: none; /* Initially hidden */
-            flex-direction: column;
-            padding: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        #language-menu.active {
-            display: flex;
-        }
-
-        .language-option {
-            padding: 10px 20px;
-            cursor: pointer;
-            color: white;
-            background: #333;
-            border-radius: 25px; /* OVAL */
-            margin: 5px 0;
-            transition: background 0.3s;
-        }
-
-        .language-option:hover {
-            background: #444;
         }
 
         /* Loading animation */
@@ -190,15 +139,6 @@
             display: inline-block;
             max-width: 90%;
         }
-
-        /* Time Display */
-        #time-display {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            font-size: 0.8em;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -208,9 +148,6 @@
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
-
-    <!-- Time display -->
-    <div id="time-display"></div>
 
     <!-- Main content -->
     <div id="content">
@@ -227,57 +164,18 @@
             i love all of you<br>
             may peace be upon us and the sky be clear above us
         </div>
-
-        <!-- Donate Button -->
-        <div id="donate-button">
-            <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
-        </div>
-
-        <!-- Language button -->
-        <div id="language-button"></div>
-
-        <!-- Language menu -->
-        <div id="language-menu">
-            <div class="language-option" data-lang="en">English</div>
-            <div class="language-option" data-lang="ru">Русский</div>
-            <div class="language-option" data-lang="ua">Українська</div>
-        </div>
     </div>
 
-    <script>
-        // Words in different languages
-        const helloWords = [
-            "hello", "hola", "bonjour", "hallo", "ciao", "こんにちは", "안녕하세요", "Здравствуйте", "Olá", "привіт", 
-            "שלום", "مرحبا", "Привет", "Merhaba", "สวัสดี", "नमस्ते", "Hej", "สวัสดีครับ", "Bonjour", "Ahoj",
-            "Zdravo", "Sveiki", "Salam", "Hej", "Labas", "Sawubona", "Kamusta", "Namaste", "Halo", "Hæ", "Γειά σας"
-        ];
+    <div id="donate-button">
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
+    </div>
 
-        let currentWordIndex = 0;
-
-        // Change hello word every second
-        setInterval(() => {
-            document.getElementById("main-text").innerText = helloWords[currentWordIndex];
-            currentWordIndex = (currentWordIndex + 1) % helloWords.length;
-        }, 1000);  // Change every second
-
-        // Display local time
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById("time-display").innerText = `${hours}:${minutes}:${seconds}`;
-        }
-
-        setInterval(updateTime, 1000);
-
-        // Load content after a delay
+    <script defer>
         window.onload = function() {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 const content = document.getElementById('content');
                 const donateButton = document.getElementById('donate-button');
-                const languageButton = document.getElementById('language-button');
 
                 loader.style.opacity = '0';
                 setTimeout(() => {
@@ -285,56 +183,9 @@
                     content.style.display = 'block';
                     content.classList.add('loaded');  // Ensure the content is shown
                     donateButton.classList.add("visible");  // Show the donate button
-                    languageButton.style.display = 'block';  // Show the language button
                 }, 500);
             }, 3000); // Wait for 3 seconds before showing content
         };
-
-        // Toggle language menu
-        document.getElementById("language-button").addEventListener("click", function() {
-            document.getElementById("language-menu").classList.toggle("active");
-        });
-
-        // Close language menu if clicked outside
-        document.body.addEventListener("click", function(event) {
-            if (!event.target.closest('#language-button') && !event.target.closest('#language-menu')) {
-                document.getElementById("language-menu").classList.remove("active");
-            }
-        });
-
-        // Change content language
-        document.querySelectorAll(".language-option").forEach(option => {
-            option.addEventListener("click", function() {
-                const lang = option.getAttribute("data-lang");
-                setLanguage(lang);
-                document.getElementById("language-menu").classList.remove("active");
-            });
-        });
-
-        function setLanguage(lang) {
-            if (lang === "ru") {
-                document.getElementById("main-text").innerText = "привет меня зовут rezyyy";
-                document.querySelector("p").innerText = "вы можете найти меня здесь";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тик-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я программист из россии<br>я вас всех люблю<br>мирного неба над головой";
-            } else if (lang === "ua") {
-                document.getElementById("main-text").innerText = "привіт, мене звати rezyyy";
-                document.querySelector("p").innerText = "ви можете знайти мене тут";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тік-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я програміст з україни<br>я вас всіх люблю<br>мирного неба над головою";
-            } else {
-                document.getElementById("main-text").innerText = "hello my name is rezyyy";
-                document.querySelector("p").innerText = "you can find me here";
-                document.querySelectorAll(".button")[0].innerText = "telegram";
-                document.querySelectorAll(".button")[1].innerText = "tiktok";
-                document.querySelector(".donate-button").innerText = "donate";
-                document.querySelector(".code-text").innerHTML = "i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us";
-            }
-        }
     </script>
 </body>
 </html>
