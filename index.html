@@ -60,12 +60,15 @@
 
         #loader {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
             z-index: 9999;
             display: flex;
-            gap: 8px;
+            justify-content: center;
+            align-items: center;
             opacity: 1;
             transition: opacity 0.5s ease-out;
         }
@@ -91,32 +94,27 @@
             padding: 20px;
             opacity: 0;
             transition: opacity 0.8s ease;
+            display: none; /* Скрываем до загрузки */
         }
 
         #content.loaded {
             opacity: 1;
+            display: block; /* Показываем после загрузки */
         }
 
         #main-text {
             font-size: clamp(1.5em, 5vw, 2em);
             margin-bottom: 20px;
             text-shadow: 0 2px 5px rgba(255, 102, 0, 0.5);
-            display: inline-block;
-        }
-
-        #main-text span {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: flyIn 0.5s forwards;
-        }
-
-        @keyframes flyIn {
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .social-links, #donate-button {
             margin-top: 20px;
+            display: none; /* Скрываем кнопки до загрузки */
+        }
+
+        .social-links.loaded, #donate-button.loaded {
+            display: block; /* Показываем после загрузки */
         }
 
         .button, .donate-button {
@@ -193,7 +191,7 @@
     </div>
 
     <div id="content">
-        <h1 id="main-text"></h1>
+        <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
         <div class="social-links">
             <a class="button" href="https://t.me/the_rezyyy">telegram</a>
@@ -225,31 +223,21 @@
             }
         }
 
-        function animateText() {
-            const text = "hello my name is rezyyy";
-            const mainText = document.getElementById('main-text');
-            text.split('').forEach((char, index) => {
-                const span = document.createElement('span');
-                span.textContent = char === ' ' ? '\u00A0' : char;
-                span.style.animationDelay = `${index * 0.05}s`;
-                mainText.appendChild(span);
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('loader');
             const content = document.getElementById('content');
+            const socialLinks = document.querySelector('.social-links');
             const donateButton = document.getElementById('donate-button');
 
             createStars();
-            animateText();
 
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
                     content.classList.add('loaded');
-                    donateButton.style.display = 'block';
+                    socialLinks.classList.add('loaded');
+                    donateButton.classList.add('loaded');
                 }, 500);
             }, 2000);
         });
