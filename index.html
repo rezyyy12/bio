@@ -1,316 +1,299 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rezyyy</title>
+    <title>Big Project Example</title>
     <style>
+        /* General Styles */
         body {
-            font-family: sans-serif;
-            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            color: white;
-            line-height: 1.6;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #181818;
-            overflow: hidden;
-        }
-
-        /* Button to choose language (simple round, outline only) */
-        #language-button {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-            display: none; /* Initially hidden */
-        }
-
-        #language-button:hover {
-            border-color: #4CAF50;
-        }
-
-        /* Language menu */
-        #language-menu {
-            position: fixed;
-            top: 60px;
-            right: 15px;
-            background: #222;
-            border-radius: 8px;
-            display: none; /* Initially hidden */
-            flex-direction: column;
-            padding: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        #language-menu.active {
-            display: flex;
-        }
-
-        .language-option {
-            padding: 10px 20px;
-            cursor: pointer;
-            color: white;
-            background: #333;
-            border-radius: 25px; /* OVAL */
-            margin: 5px 0;
-            transition: background 0.3s;
-            text-transform: lowercase; /* Make text lowercase */
-            display: flex;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
-        .language-option img {
-            width: 20px;
-            height: 14px;
-            margin-right: 10px;
-        }
-
-        .language-option:hover {
-            background: #444;
-        }
-
-        /* Loading animation */
-        #loader {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: white;
-            border-radius: 50%;
-            animation: bounce 1.5s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-        }
-
-        /* Main content */
-        #content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: white;
             padding: 20px;
-            flex-grow: 1;
+            width: 100%;
+            text-align: center;
         }
 
-        #content.loaded {
-            display: block;
-            opacity: 1;
+        header h1 {
+            font-size: 3em;
         }
 
-        /* Main Text */
-        #main-text {
-            font-size: 2em;
-            margin-bottom: 20px;
+        /* Navigation Styles */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+            padding: 10px;
+            width: 100%;
         }
 
-        /* Mobile adaptation */
-        @media (max-width: 480px) {
-            #main-text {
-                font-size: 1.5em;
-            }
-        }
-
-        .social-links {
-            margin-top: 30px;
-        }
-
-        /* Buttons */
-        .button, .donate-button {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 25px;
-            font-size: 1em;
-            font-weight: bold;
+        nav a {
             text-decoration: none;
             color: white;
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease;
+            padding: 15px 25px;
+            margin: 0 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
         }
 
+        nav a:hover {
+            background-color: #555;
+        }
+
+        /* Main Content Styles */
+        .content {
+            width: 80%;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .content h2 {
+            font-size: 2em;
+        }
+
+        .content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Button Styles */
         .button {
-            background: linear-gradient(45deg, #ff6600, #ff3300);
-            box-shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 20px 0;
         }
 
         .button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ff3300, #cc0000);
+            background-color: #0056b3;
         }
 
-        .donate-button {
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
-            box-shadow: 0 3px 8px rgba(255, 204, 0, 0.5);
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .donate-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ffaa00, #ff8800);
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
 
-        p {
-            font-size: 1.1em;
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        #donate-button {
-            margin-top: 20px;
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        /* Modal Styles */
+        .modal {
             display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
         }
 
-        #donate-button.visible {
-            display: block;
-        }
-
-        /* Code font style for the last text */
-        .code-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2em;
-            margin-top: 30px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background-color: #222;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
             padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            max-width: 90%;
+            border: 1px solid #888;
+            width: 80%;
         }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Language Options */
+        #language-selector {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .language-option {
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        /* Time Display */
+        #time-display {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .content {
+                width: 100%;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <!-- Loading animation -->
-    <div id="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+
+    <!-- Header -->
+    <header>
+        <h1>Welcome to Our Website</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <!-- Time Display -->
+    <div id="time-display"></div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Introduction</h2>
+        <p>
+            This is a large-scale web page with multiple sections, including navigation, forms, and more.
+            The page also features smooth animations and dynamic content.
+        </p>
+        <a href="#" class="button">Learn More</a>
     </div>
 
-    <!-- Main content -->
-    <div id="content">
-        <h1 id="main-text">hello my name is rezyyy</h1>
-        <p>you can find me here</p>
-        <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
-        </div>
-
-        <!-- Code-style text -->
-        <div class="code-text">
-            i am a coder from russia<br>
-            i love all of you<br>
-            may peace be upon us and the sky be clear above us
-        </div>
-
-        <!-- Donate Button -->
-        <div id="donate-button">
-            <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
-        </div>
-
-        <!-- Language button -->
-        <div id="language-button"></div>
-
-        <!-- Language menu -->
-        <div id="language-menu">
-            <div class="language-option" data-lang="en">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English Flag"> english
-            </div>
-          <div class="language-option" data-lang="ru">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg" alt="Russian Flag"> russian
-</div>
-            <div class="language-option" data-lang="ua">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg" alt="Ukrainian Flag"> ukrainian
-            </div>
+    <!-- Modal for Contact Form -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <input type="submit" value="Send Message">
+            </form>
         </div>
     </div>
+
+    <!-- Language Selector -->
+    <div id="language-selector">
+        <span class="language-option" onclick="changeLanguage('en')">English</span>
+        <span class="language-option" onclick="changeLanguage('es')">Español</span>
+        <span class="language-option" onclick="changeLanguage('fr')">Français</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Our Company</p>
+    </footer>
 
     <script>
-        // Load content after a delay
-        window.onload = function() {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                const content = document.getElementById('content');
-                const donateButton = document.getElementById('donate-button');
-                const languageButton = document.getElementById('language-button');
+        // Time Display Function
+        function updateTime() {
+            const timeDisplay = document.getElementById('time-display');
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString();
+        }
 
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    content.style.display = 'block';
-                    content.classList.add('loaded');  // Ensure the content is shown
-                    donateButton.classList.add("visible");  // Show the donate button
-                    languageButton.style.display = 'block';  // Show the language button
-                }, 500);
-            }, 3000); // Wait for 3 seconds before showing content
-        };
+        setInterval(updateTime, 1000); // Update time every second
 
-        // Toggle language menu
-        document.getElementById("language-button").addEventListener("click", function() {
-            document.getElementById("language-menu").classList.toggle("active");
-        });
+        // Modal functionality
+        const modal = document.getElementById("contact-modal");
+        const closeBtn = document.getElementsByClassName("close")[0];
 
-        // Close language menu if clicked outside
-        document.body.addEventListener("click", function(event) {
-            if (!event.target.closest('#language-button') && !event.target.closest('#language-menu')) {
-                document.getElementById("language-menu").classList.remove("active");
-            }
-        });
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
 
-        // Change content language
-        document.querySelectorAll(".language-option").forEach(option => {
-            option.addEventListener("click", function() {
-                const lang = option.getAttribute("data-lang");
-                setLanguage(lang);
-                document.getElementById("language-menu").classList.remove("active");
-            });
-        });
-
-        function setLanguage(lang) {
-            if (lang === "ru") {
-                document.getElementById("main-text").innerText = "привет меня зовут rezyyy";
-                document.querySelector("p").innerText = "вы можете найти меня здесь";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тик-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я программист из россии<br>я вас всех люблю<br>мирного неба над головой";
-            } else if (lang === "ua") {
-                document.getElementById("main-text").innerText = "привіт, мене звати rezyyy";
-                document.querySelector("p").innerText = "ви можете знайти мене тут";
-                document.querySelectorAll(".button")[0].innerText = "телеграм";
-                document.querySelectorAll(".button")[1].innerText = "тік-ток";
-                document.querySelector(".donate-button").innerText = "донат";
-                document.querySelector(".code-text").innerHTML = "я програміст з україни<br>я вас всіх люблю<br>мирного неба над головою";
-            } else {
-                document.getElementById("main-text").innerText = "hello my name is rezyyy";
-                document.querySelector("p").innerText = "you can find me here";
-                document.querySelectorAll(".button")[0].innerText = "telegram";
-                document.querySelectorAll(".button")[1].innerText = "tiktok";
-                document.querySelector(".donate-button").innerText = "donate";
-                document.querySelector(".code-text").innerHTML = "i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us";
+        // Language selector functionality
+        function changeLanguage(language) {
+            if (language === 'en') {
+                alert('You selected English');
+            } else if (language === 'es') {
+                alert('Seleccionaste Español');
+            } else if (language === 'fr') {
+                alert('Vous avez sélectionné le Français');
             }
         }
+
+        // Show modal on button click
+        document.querySelector('.button').onclick = function() {
+            modal.style.display = "block";
+        }
     </script>
+
 </body>
 </html>
