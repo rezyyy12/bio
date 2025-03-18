@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rezyyy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
@@ -29,7 +30,6 @@
             overflow-x: hidden;
         }
 
-        /* Starry Background */
         .stars {
             position: fixed;
             top: 0;
@@ -58,7 +58,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Loading Animation */
         #loader {
             position: fixed;
             top: 50%;
@@ -87,7 +86,6 @@
             40% { transform: translateY(-12px); }
         }
 
-        /* Main Content */
         #content {
             flex-grow: 1;
             padding: 20px;
@@ -114,10 +112,7 @@
         }
 
         @keyframes flyIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .social-links, #donate-button {
@@ -182,15 +177,9 @@
             transform: perspective(1000px) rotateX(0deg);
         }
 
-        /* Mobile Optimization */
         @media (max-width: 480px) {
-            .button, .donate-button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-            .code-text {
-                font-size: 1em;
-            }
+            .button, .donate-button { padding: 10px 20px; font-size: 0.9em; }
+            .code-text { font-size: 1em; }
         }
     </style>
 </head>
@@ -221,10 +210,7 @@
         <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
     </div>
 
-    <audio id="hoverSound" src="https://www.myinstants.com/media/sounds/click.mp3"></audio>
-
     <script defer>
-        // Starry Background
         function createStars() {
             const starsContainer = document.getElementById('stars');
             for (let i = 0; i < 100; i++) {
@@ -239,7 +225,6 @@
             }
         }
 
-        // Text Animation
         function animateText() {
             const text = "hello my name is rezyyy";
             const mainText = document.getElementById('main-text');
@@ -251,27 +236,6 @@
             });
         }
 
-        // Parallax Effect for Code Text
-        function handleParallax() {
-            const codeText = document.querySelector('.code-text');
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.scrollY;
-                codeText.style.transform = `perspective(1000px) rotateX(5deg) translateY(${scrollPosition * 0.1}px)`;
-            });
-        }
-
-        // Button Hover Sound
-        function setupButtonSounds() {
-            const buttons = document.querySelectorAll('.button, .donate-button');
-            const hoverSound = document.getElementById('hoverSound');
-            buttons.forEach(button => {
-                button.addEventListener('mouseover', () => {
-                    hoverSound.currentTime = 0;
-                    hoverSound.play().catch(() => {});
-                });
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('loader');
             const content = document.getElementById('content');
@@ -279,8 +243,6 @@
 
             createStars();
             animateText();
-            handleParallax();
-            setupButtonSounds();
 
             setTimeout(() => {
                 loader.style.opacity = '0';
