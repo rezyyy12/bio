@@ -3,18 +3,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rezyyy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
-            --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
-            --bg-color: #181818;
-            --text-color: #fff;
-            --shadow: 0 3px 8px rgba(255, 102, 0, 0.5);
+            --bg-color: #f5f5f5;
+            --text-color: #1a1a1a;
+            --accent-color: #ff6b6b;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -23,60 +22,28 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background: var(--bg-color); /* Устанавливаем базовый фон сразу */
-            transition: background 0.5s ease;
-            position: relative;
+            background-color: var(--bg-color);
             overflow-x: hidden;
-        }
-
-        /* Убираем белый фон на старте */
-        html {
-            background: var(--bg-color);
-        }
-
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
         }
 
         #loader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color); /* Фон загрузчика совпадает с body */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 9999;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            gap: 8px;
             opacity: 1;
             transition: opacity 0.5s ease-out;
         }
 
         .dot {
-            width: 12px;
-            height: 12px;
-            background-color: var(--text-color);
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
             border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out;
+            animation: bounce 1.2s infinite ease-in-out;
         }
 
         .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -84,105 +51,76 @@
 
         @keyframes bounce {
             0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-12px); }
+            40% { transform: translateY(-8px); }
         }
 
         #content {
             flex-grow: 1;
             padding: 20px;
             opacity: 0;
-            transition: opacity 0.8s ease;
-            display: none;
+            transition: opacity 0.6s ease;
         }
 
         #content.loaded {
             opacity: 1;
-            display: block;
         }
 
         #main-text {
-            font-size: clamp(1.5em, 5vw, 2em);
-            margin-bottom: 20px;
-            text-shadow: 0 2px 5px rgba(255, 102, 0, 0.5);
+            font-size: clamp(1.8em, 6vw, 2.5em);
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--text-color);
         }
 
         .social-links, #donate-button {
             margin-top: 20px;
-            display: none;
-        }
-
-        .social-links.loaded, #donate-button.loaded {
-            display: block;
-        }
-
-        .button, .donate-button {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--text-color);
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease;
-            box-shadow: var(--shadow);
-            position: relative;
-            animation: pulse 2s infinite ease-in-out;
-            text-decoration: none !important; /* Убираем подчёркивание ссылок */
         }
 
         .button {
-            background: var(--primary-gradient);
+            display: inline-flex;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-color);
+            background-color: #fff;
+            border: 1px solid var(--accent-color);
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            margin: 0 10px;
         }
 
         .button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ff3300, #cc0000);
-        }
-
-        .donate-button {
-            background: var(--secondary-gradient);
-        }
-
-        .donate-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ffaa00, #ff8800);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 102, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0); }
+            transform: translateY(-2px);
+            background-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
         }
 
         .code-text {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2em;
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            max-width: 90%;
+            font-size: 1.1em;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            max-width: 85%;
             margin-left: auto;
             margin-right: auto;
             word-wrap: break-word;
-            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
-            transform: perspective(1000px) rotateX(5deg);
-            transition: transform 0.3s ease;
-        }
-
-        .code-text:hover {
-            transform: perspective(1000px) rotateX(0deg);
+            box-shadow: var(--shadow);
+            color: var(--text-color);
         }
 
         @media (max-width: 480px) {
-            .button, .donate-button { padding: 10px 20px; font-size: 0.9em; }
-            .code-text { font-size: 1em; }
+            #main-text { font-size: clamp(1.5em, 5vw, 2em); }
+            .button { padding: 8px 16px; font-size: 0.9em; margin: 0 5px; }
+            .code-text { font-size: 0.95em; padding: 12px; }
         }
     </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-
     <div id="loader">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -208,52 +146,19 @@
     </div>
 
     <script defer>
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.style.width = `${Math.random() * 3 + 1}px`;
-                star.style.height = star.style.width;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                starsContainer.appendChild(star);
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('loader');
             const content = document.getElementById('content');
-            const socialLinks = document.querySelector('.social-links');
             const donateButton = document.getElementById('donate-button');
-
-            createStars();
-
-            // Устанавливаем фон сразу после загрузки DOM
-            document.body.style.background = 'linear-gradient(45deg, #181818, #2a2a2a, #181818, #2a2a2a)';
-            document.body.style.backgroundSize = '400%';
-            document.body.style.animation = 'gradientShift 15s ease infinite';
 
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
                     content.classList.add('loaded');
-                    socialLinks.classList.add('loaded');
-                    donateButton.classList.add('loaded');
+                    donateButton.style.display = 'block';
                 }, 500);
             }, 2000);
-        });
-
-        // Предотвращаем мигание при клике
-        document.querySelectorAll('.button, .donate-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault(); // Блокируем дефолтное поведение
-                setTimeout(() => {
-                    window.location.href = button.getAttribute('href'); // Переход после задержки
-                }, 100);
-            });
         });
     </script>
 </body>
