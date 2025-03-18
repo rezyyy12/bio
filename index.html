@@ -18,6 +18,7 @@
             overflow: hidden;
         }
 
+        /* Button to choose language (simple round, outline only) */
         #language-button {
             position: fixed;
             top: 15px;
@@ -28,20 +29,21 @@
             border: 2px solid white;
             cursor: pointer;
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-            display: none;
+            display: none; /* Initially hidden */
         }
 
         #language-button:hover {
             border-color: #4CAF50;
         }
 
+        /* Language menu */
         #language-menu {
             position: fixed;
             top: 60px;
             right: 15px;
             background: #222;
             border-radius: 8px;
-            display: none;
+            display: none; /* Initially hidden */
             flex-direction: column;
             padding: 10px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
@@ -56,15 +58,25 @@
             cursor: pointer;
             color: white;
             background: #333;
-            border-radius: 25px;
+            border-radius: 25px; /* OVAL */
             margin: 5px 0;
             transition: background 0.3s;
+            text-transform: lowercase; /* Make text lowercase */
+            display: flex;
+            align-items: center;
+        }
+
+        .language-option img {
+            width: 20px;
+            height: 14px;
+            margin-right: 10px;
         }
 
         .language-option:hover {
             background: #444;
         }
 
+        /* Loading animation */
         #loader {
             position: fixed;
             top: 50%;
@@ -96,6 +108,7 @@
             40% { transform: translateY(-10px); }
         }
 
+        /* Main content */
         #content {
             display: none;
             opacity: 0;
@@ -109,14 +122,16 @@
             opacity: 1;
         }
 
+        /* Main Text */
         #main-text {
-            font-size: 1.5em; /* Уменьшено */
+            font-size: 2em;
             margin-bottom: 20px;
         }
 
+        /* Mobile adaptation */
         @media (max-width: 480px) {
             #main-text {
-                font-size: 1.2em; /* Уменьшено для мобильных устройств */
+                font-size: 1.5em;
             }
         }
 
@@ -124,11 +139,12 @@
             margin-top: 30px;
         }
 
+        /* Buttons */
         .button, .donate-button {
             display: inline-block;
             margin: 10px;
-            padding: 10px 20px;
-            font-size: 0.9em; /* Уменьшено */
+            padding: 12px 25px;
+            font-size: 1em;
             font-weight: bold;
             text-decoration: none;
             color: white;
@@ -157,7 +173,7 @@
         }
 
         p {
-            font-size: 1em; /* Уменьшено */
+            font-size: 1.1em;
         }
 
         #donate-button {
@@ -169,9 +185,10 @@
             display: block;
         }
 
+        /* Code font style for the last text */
         .code-text {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1em; /* Уменьшено */
+            font-size: 1.2em;
             margin-top: 30px;
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -184,12 +201,14 @@
     </style>
 </head>
 <body>
+    <!-- Loading animation -->
     <div id="loader">
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
 
+    <!-- Main content -->
     <div id="content">
         <h1 id="main-text">hello my name is rezyyy</h1>
         <p>you can find me here</p>
@@ -198,26 +217,37 @@
             <a class="button" href="https://www.tiktok.com/@rezyyy_ts">tiktok</a>
         </div>
 
+        <!-- Code-style text -->
         <div class="code-text">
             i am a coder from russia<br>
             i love all of you<br>
             may peace be upon us and the sky be clear above us
         </div>
 
+        <!-- Donate Button -->
         <div id="donate-button">
             <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7">donate</a>
         </div>
 
+        <!-- Language button -->
         <div id="language-button"></div>
 
+        <!-- Language menu -->
         <div id="language-menu">
-            <div class="language-option" data-lang="en">English</div>
-            <div class="language-option" data-lang="ru">Русский</div>
-            <div class="language-option" data-lang="ua">Українська</div>
+            <div class="language-option" data-lang="en">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English Flag"> english
+            </div>
+            <div class="language-option" data-lang="ru">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Russia.svg" alt="Russian Flag"> russian
+            </div>
+            <div class="language-option" data-lang="ua">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg" alt="Ukrainian Flag"> ukrainian
+            </div>
         </div>
     </div>
 
     <script>
+        // Load content after a delay
         window.onload = function() {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
@@ -229,23 +259,26 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     content.style.display = 'block';
-                    content.classList.add('loaded');
-                    donateButton.classList.add("visible");
-                    languageButton.style.display = 'block';
-                }, 500); // Появление контента через 500 миллисекунд
-            }, 1000); // Задержка в 1 секунду
+                    content.classList.add('loaded');  // Ensure the content is shown
+                    donateButton.classList.add("visible");  // Show the donate button
+                    languageButton.style.display = 'block';  // Show the language button
+                }, 500);
+            }, 3000); // Wait for 3 seconds before showing content
         };
 
+        // Toggle language menu
         document.getElementById("language-button").addEventListener("click", function() {
             document.getElementById("language-menu").classList.toggle("active");
         });
 
+        // Close language menu if clicked outside
         document.body.addEventListener("click", function(event) {
             if (!event.target.closest('#language-button') && !event.target.closest('#language-menu')) {
                 document.getElementById("language-menu").classList.remove("active");
             }
         });
 
+        // Change content language
         document.querySelectorAll(".language-option").forEach(option => {
             option.addEventListener("click", function() {
                 const lang = option.getAttribute("data-lang");
