@@ -11,8 +11,9 @@
             --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
             --bg-color: #181818;
             --text-color: #fff;
-            --shadow: 0 3px 8px rgba(255, 102, 0, 0.2);
+            --shadow: 0 2px 6px rgba(255, 102, 0, 0.15);
             --accent-color: #ff6b6b;
+            --outline-color: rgba(255, 107, 107, 0.5);
         }
 
         html, body {
@@ -49,7 +50,7 @@
                 transparent 16px
             );
             z-index: -1;
-            opacity: 0.2;
+            opacity: 0.15;
             animation: slide 20s linear infinite;
         }
 
@@ -67,7 +68,7 @@
             background: linear-gradient(
                 to bottom,
                 rgba(255, 255, 255, 0) 50%,
-                rgba(255, 255, 255, 0.03) 51%,
+                rgba(255, 255, 255, 0.02) 51%,
                 rgba(255, 255, 255, 0) 52%
             );
             pointer-events: none;
@@ -94,15 +95,24 @@
             position: absolute;
             background: var(--accent-color);
             border-radius: 50%;
-            opacity: 0.5;
-            animation: float 12s linear infinite;
-            will-change: transform; /* Оптимизация анимации */
+            opacity: 0.4;
+            animation: float 10s linear infinite;
+            will-change: transform;
         }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-            50% { opacity: 0.2; }
-            100% { transform: translate(50vw, 50vh) scale(0.5); opacity: 0; }
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(30vw, 30vh) scale(0.3); opacity: 0; }
+        }
+
+        .interactive-dot {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1;
         }
 
         #loader {
@@ -160,13 +170,26 @@
             font-size: clamp(1.5em, 5vw, 2em);
             margin-bottom: 20px;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-            animation: neon-glow 2s infinite alternate;
+            text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+            position: relative;
+            z-index: 2;
         }
 
-        @keyframes neon-glow {
-            0% { text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color); }
-            100% { text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color); }
+        /* Голографический эффект */
+        #main-text::before {
+            content: 'hello my name is rezyyy';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(255, 107, 107, 0.3);
+            text-shadow: 0 0 10px var(--accent-color);
+            z-index: -1;
+            animation: hologram 2s infinite alternate;
+        }
+
+        @keyframes hologram {
+            0% { transform: translateY(2px); }
+            100% { transform: translateY(-2px); }
         }
 
         .social-links, #donate-button {
@@ -190,6 +213,8 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            outline: 1px solid var(--outline-color); /* Акцентный контур */
+            outline-offset: 2px;
             cursor: pointer;
         }
 
@@ -200,7 +225,7 @@
         .button:hover {
             transform: scale(1.05);
             background: linear-gradient(45deg, #ff3300, #cc0000);
-            box-shadow: 0 0 15px rgba(255, 51, 0, 0.7);
+            box-shadow: 0 0 15px rgba(255, 51, 0, 0.5);
         }
 
         .donate-button {
@@ -210,7 +235,7 @@
         .donate-button:hover {
             transform: scale(1.05);
             background: linear-gradient(45deg, #ffaa00, #ff8800);
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.7);
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
         }
 
         .button::after, .donate-button::after {
@@ -220,18 +245,17 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
+            transition: width 0.4s ease, height 0.4s ease;
         }
 
         .button:hover::after, .donate-button:hover::after {
-            width: 200%;
-            height: 200%;
+            width: 150%;
+            height: 150%;
         }
 
-        /* Подсказки */
         .tooltip {
             position: absolute;
             background: rgba(0, 0, 0, 0.8);
@@ -265,9 +289,14 @@
             margin-left: auto;
             margin-right: auto;
             word-wrap: break-word;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 0 8px rgba(255, 107, 107, 0.2);
             position: relative;
             overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .code-text:hover {
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
         }
 
         .code-text::before {
@@ -280,10 +309,10 @@
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 107, 107, 0.2),
+                rgba(255, 107, 107, 0.15),
                 transparent
             );
-            animation: glitch 4s linear infinite;
+            animation: glitch 3s linear infinite;
         }
 
         @keyframes glitch {
@@ -299,7 +328,7 @@
             .code-text {
                 font-size: 1em;
             }
-            .tooltip { display: none; } /* Убираем подсказки на мобильных */
+            .tooltip { display: none; }
         }
     </style>
 </head>
@@ -341,8 +370,6 @@
         </a>
     </div>
 
-    <audio id="hoverSound" src="https://www.myinstants.com/media/sounds/click.mp3"></audio>
-
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
             const loader = document.getElementById('loader');
@@ -351,42 +378,59 @@
             const donateButton = document.getElementById('donate-button');
             const particlesContainer = document.getElementById('particles');
 
-            // Создаём частицы (оптимизировано до 15)
+            // Создаём частицы (оптимизировано до 10)
             function createParticles() {
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 10; i++) {
                     const particle = document.createElement('div');
                     particle.classList.add('particle');
                     particle.style.width = `${Math.random() * 2 + 1}px`;
                     particle.style.height = particle.style.width;
                     particle.style.left = `${Math.random() * 100}%`;
                     particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 3}s`;
                     particlesContainer.appendChild(particle);
                 }
             }
 
-            // Звук и обработка наведения
-            function setupButtonSounds() {
-                const buttons = document.querySelectorAll('.button, .donate-button');
-                const hoverSound = document.getElementById('hoverSound');
-                buttons.forEach(button => {
-                    button.addEventListener('mouseover', () => {
-                        if (hoverSound) {
-                            hoverSound.currentTime = 0;
-                            hoverSound.play().catch(err => console.log('Sound blocked:', err));
-                        }
+            // Парящие точки, реагирующие на движение
+            function createInteractiveDots() {
+                const dotCount = 5;
+                for (let i = 0; i < dotCount; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('interactive-dot');
+                    dot.style.width = `${Math.random() * 5 + 5}px`;
+                    dot.style.height = dot.style.width;
+                    document.body.appendChild(dot);
+                }
+
+                document.addEventListener('mousemove', (e) => {
+                    const dots = document.querySelectorAll('.interactive-dot');
+                    dots.forEach((dot, index) => {
+                        const x = e.clientX + (index * 20 - dotCount * 10);
+                        const y = e.clientY + (index * 20 - dotCount * 10);
+                        dot.style.left = `${x}px`;
+                        dot.style.top = `${y}px`;
+                        dot.style.opacity = 0.5;
+                        setTimeout(() => (dot.style.opacity = 0), 1000);
                     });
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        setTimeout(() => {
-                            window.location.href = button.getAttribute('href');
-                        }, 100);
+                });
+
+                document.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    const dots = document.querySelectorAll('.interactive-dot');
+                    dots.forEach((dot, index) => {
+                        const x = touch.clientX + (index * 20 - dotCount * 10);
+                        const y = touch.clientY + (index * 20 - dotCount * 10);
+                        dot.style.left = `${x}px`;
+                        dot.style.top = `${y}px`;
+                        dot.style.opacity = 0.5;
+                        setTimeout(() => (dot.style.opacity = 0), 1000);
                     });
                 });
             }
 
             createParticles();
-            setupButtonSounds();
+            createInteractiveDots();
 
             setTimeout(() => {
                 if (loader && content && socialLinks && donateButton) {
@@ -396,7 +440,7 @@
                         content.classList.add('loaded');
                         socialLinks.classList.add('loaded');
                         donateButton.classList.add('loaded');
-                    }, 600); // Синхронизировано с анимацией шторки
+                    }, 600);
                 } else {
                     console.error('One or more elements not found!');
                 }
