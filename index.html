@@ -33,7 +33,6 @@
             z-index: 1;
         }
 
-        /* Полоски на фоне */
         .bg-stripes {
             position: fixed;
             top: 0;
@@ -57,7 +56,6 @@
             100% { background-position: 100% 100%; }
         }
 
-        /* Эффект "скана" */
         .scanline {
             position: fixed;
             top: 0;
@@ -80,7 +78,6 @@
             100% { transform: translateY(100%); }
         }
 
-        /* Загрузчик */
         #loader {
             position: fixed;
             top: 0;
@@ -113,7 +110,6 @@
             40% { transform: translateY(-12px); }
         }
 
-        /* Контент */
         #content {
             flex-grow: 1;
             padding: 20px;
@@ -177,7 +173,6 @@
             box-shadow: 0 0 15px rgba(255, 170, 0, 0.7);
         }
 
-        /* Эффект свечения при наведении */
         .button::after, .donate-button::after {
             content: '';
             position: absolute;
@@ -214,7 +209,6 @@
             overflow: hidden;
         }
 
-        /* Эффект "вспышки" для code-text */
         .code-text::before {
             content: '';
             position: absolute;
@@ -272,4 +266,37 @@
     </div>
 
     <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank"> ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">donate</a>
+    </div>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            const socialLinks = document.querySelector('.social-links');
+            const donateButton = document.getElementById('donate-button');
+
+            // Проверяем, что все элементы найдены
+            console.log('Loader:', loader);
+            console.log('Content:', content);
+            console.log('Social Links:', socialLinks);
+            console.log('Donate Button:', donateButton);
+
+            setTimeout(() => {
+                if (loader && content && socialLinks && donateButton) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        content.classList.add('loaded');
+                        socialLinks.classList.add('loaded');
+                        donateButton.classList.add('loaded');
+                        console.log('Content loaded successfully');
+                    }, 500);
+                } else {
+                    console.error('One or more elements not found!');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
