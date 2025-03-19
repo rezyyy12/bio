@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rezyyy - Ебанистический Шторм</title>
+    <title>rezyyy</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -16,34 +16,34 @@
             --accent-color: #ff6b6b;
             --outline-color: rgba(255, 107, 107, 0.5);
             --rainbow-colors: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0000ff, #8000ff, #ff00ff);
-            --neon-green: #00ff00;
-            --skull-color: #fff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            /* Новые цвета для кнопок */
+            --neon-purple: #ff00ff;
+            --toxic-green: #00ff00;
+            --blood-red: #ff0000;
         }
 
         html, body {
+            margin: 0;
+            padding: 0;
             background-color: var(--bg-color);
             overflow-x: hidden;
             height: 100%;
             position: relative;
-            font-family: 'Roboto Mono', monospace;
-            color: var(--text-color);
         }
 
         body {
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            color: var(--text-color);
+            line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
             overflow: hidden;
-            text-align: center;
         }
 
-        /* Фон с полосками */
         .bg-stripes {
             position: fixed;
             top: 0;
@@ -58,8 +58,8 @@
                 transparent 12px
             );
             z-index: -2;
-            opacity: 0.2;
-            animation: slide 15s linear infinite;
+            opacity: 0.1;
+            animation: slide 20s linear infinite;
         }
 
         @keyframes slide {
@@ -67,7 +67,6 @@
             100% { background-position: 100% 100%; }
         }
 
-        /* Радужный фон */
         .rainbow-bg {
             position: fixed;
             top: 0;
@@ -76,8 +75,8 @@
             height: 100%;
             background: var(--rainbow-colors);
             z-index: -3;
-            animation: rainbowShift 8s infinite;
-            opacity: 0.1;
+            animation: rainbowShift 10s infinite;
+            opacity: 0.05;
         }
 
         @keyframes rainbowShift {
@@ -86,7 +85,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Сканлайн */
         .scanline {
             position: fixed;
             top: 0;
@@ -96,12 +94,12 @@
             background: linear-gradient(
                 to bottom,
                 rgba(255, 255, 255, 0) 50%,
-                rgba(255, 255, 255, 0.03) 51%,
+                rgba(255, 255, 255, 0.02) 51%,
                 rgba(255, 255, 255, 0) 52%
             );
             pointer-events: none;
             z-index: 0;
-            animation: scan 4s linear infinite;
+            animation: scan 5s linear infinite;
         }
 
         @keyframes scan {
@@ -109,601 +107,5 @@
             100% { transform: translateY(100%); }
         }
 
-        /* Частицы */
         .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: float 6s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-            100% { transform: translate(15vw, 15vh) scale(0.1); opacity: 0; }
-        }
-
-        /* Падающие пиксели */
-        .falling-pixels {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .pixel {
-            position: absolute;
-            background: var(--neon-green);
-            width: 3px;
-            height: 3px;
-            animation: fall 2.5s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-20px) scale(1); opacity: 0.9; }
-            100% { transform: translateY(110vh) scale(0.3); opacity: 0; }
-        }
-
-        /* Вспышки */
-        .flash {
-            position: absolute;
-            background: rgba(255, 107, 107, 0.15);
-            border-radius: 50%;
-            animation: flashAnim 1.5s infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        @keyframes flashAnim {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(2.5); opacity: 0.4; }
-            100% { transform: scale(5); opacity: 0; }
-        }
-
-        /* Летающие черепа */
-        .skull {
-            position: absolute;
-            color: var(--skull-color);
-            font-size: 20px;
-            animation: skullFly 5s linear infinite;
-            pointer-events: none;
-            z-index: 3;
-            opacity: 0.7;
-        }
-
-        @keyframes skullFly {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
-            50% { transform: translate(10vw, -10vh) rotate(180deg); opacity: 0.9; }
-            100% { transform: translate(20vw, 20vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Кастомный курсор */
-        .custom-cursor {
-            position: fixed;
-            width: 25px;
-            height: 25px;
-            background: rgba(255, 107, 107, 0.5);
-            border: 2px solid var(--accent-color);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-            transform: translate(-50%, -50%);
-            transition: transform 0.05s ease, opacity 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        /* Интерактивная точка */
-        .interactive-dot {
-            position: absolute;
-            background: rgba(0, 255, 0, 0.4);
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            z-index: 1;
-        }
-
-        /* Лоадер */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            opacity: 1;
-            transition: clip-path 0.4s ease, opacity 0.4s ease-out;
-            clip-path: inset(0 0 0 0);
-        }
-
-        #loader.hidden {
-            clip-path: inset(0 100% 0 0);
-            opacity: 0;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--neon-green);
-            border-radius: 50%;
-            animation: bounce 0.8s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-        }
-
-        /* Контент */
-        #content {
-            flex-grow: 1;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            display: none;
-            position: relative;
-            z-index: 2;
-        }
-
-        #content.loaded {
-            opacity: 1;
-            display: block;
-        }
-
-        #main-text {
-            font-size: clamp(1.8em, 6vw, 2.5em);
-            margin-bottom: 25px;
-            font-weight: 700;
-            text-shadow: 0 0 6px var(--neon-green), 0 0 12px var(--neon-green);
-            position: relative;
-            z-index: 2;
-            animation: glitch 2s infinite;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-            100% { transform: translate(0); }
-        }
-
-        #main-text::before {
-            content: 'hello my name is rezyyy';
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: rgba(0, 255, 0, 0.3);
-            text-shadow: 0 0 10px var(--neon-green);
-            z-index: -1;
-            animation: hologram 1s infinite alternate;
-        }
-
-        @keyframes hologram {
-            0% { transform: translateY(2px); }
-            100% { transform: translateY(-2px); }
-        }
-
-        .social-links, #donate-button {
-            margin-top: 25px;
-            display: none;
-        }
-
-        .social-links.loaded, #donate-button.loaded {
-            display: block;
-        }
-
-        .button, .donate-button {
-            display: inline-block;
-            padding: 14px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--text-color);
-            border-radius: 35px;
-            transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-            outline: 2px solid var(--outline-color);
-            outline-offset: 3px;
-            cursor: pointer;
-            animation: pulseOutline 1.5s infinite ease-in-out;
-        }
-
-        @keyframes pulseOutline {
-            0%, 100% { outline-offset: 3px; }
-            50% { outline-offset: 6px; }
-        }
-
-        .button {
-            background: var(--primary-gradient);
-        }
-
-        .button:hover {
-            transform: scale(1.1);
-            background: linear-gradient(45deg, #ff3300, #cc0000);
-            box-shadow: 0 0 15px rgba(255, 51, 0, 0.5);
-        }
-
-        .donate-button {
-            background: var(--secondary-gradient);
-        }
-
-        .donate-button:hover {
-            transform: scale(1.1);
-            background: linear-gradient(45deg, #ffaa00, #ff8800);
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
-        }
-
-        .button::after, .donate-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease;
-        }
-
-        .button:hover::after, .donate-button:hover::after {
-            width: 200%;
-            height: 200%;
-        }
-
-        .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            color: var(--neon-green);
-            padding: 6px 12px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            bottom: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.15s ease;
-            z-index: 10;
-        }
-
-        .button:hover .tooltip, .donate-button:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .code-text {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.3em;
-            margin-top: 35px;
-            padding: 25px;
-            background-color: #222;
-            border-radius: 12px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            word-wrap: break-word;
-            box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            color: var(--neon-green);
-            transition: box-shadow 0.2s ease;
-        }
-
-        .code-text:hover {
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
-        }
-
-        .code-text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 255, 0, 0.15),
-                transparent
-            );
-            animation: matrixFlow 1.5s linear infinite;
-        }
-
-        @keyframes matrixFlow {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Матричный дождь */
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .matrix-char {
-            position: absolute;
-            color: var(--neon-green);
-            font-size: 16px;
-            opacity: 0.8;
-            animation: matrixDrop 3s linear infinite;
-        }
-
-        @keyframes matrixDrop {
-            0% { transform: translateY(-100vh); opacity: 0.8; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* Пульсирующий текст */
-        .pulse-text {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Вращающийся текст */
-        .spin-text {
-            display: inline-block;
-            animation: spin 4s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 480px) {
-            .button, .donate-button {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
-            .code-text {
-                font-size: 1.1em;
-            }
-            .tooltip { display: none; }
-            .custom-cursor { display: none; }
-            .skull { font-size: 15px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="rainbow-bg"></div>
-    <div class="bg-stripes"></div>
-    <div class="scanline"></div>
-    <div class="particles" id="particles"></div>
-    <div class="falling-pixels" id="falling-pixels"></div>
-    <div id="flashes" class="flashes"></div>
-    <div class="matrix-rain" id="matrix-rain"></div>
-    <div id="skulls" class="skulls"></div>
-    <div id="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
-
-    <div id="content">
-        <h1 id="main-text" class="pulse-text">hello my name is <span class="spin-text">rezyyy</span></h1>
-        <p>you can find me here, you crazy fuckers!</p>
-        <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy" target="_blank">
-                telegram
-                <span class="tooltip"><i class="fab fa-telegram-plane"></i> Пиздец, пиши мне!</span>
-            </a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">
-                tiktok
-                <span class="tooltip"><i class="fab fa-tiktok"></i> Смотри мои ебаные видосы!</span>
-            </a>
-        </div>
-        <div class="code-text">
-            i am a coder from russia<br>
-            i love all of you motherfuckers<br>
-            may peace be upon us and the sky be clear above us<br>
-            <span class="spin-text">FUCK YEAH!</span>
-        </div>
-    </div>
-
-    <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">
-            donate
-            <span class="tooltip"><i class="fas fa-donate"></i> Кидай бабки, пиздец поддержи!</span>
-        </a>
-    </div>
-
-    <div class="custom-cursor" id="custom-cursor"></div>
-    <div class="interactive-dot" id="interactive-dot"></div>
-
-    <audio id="bg-audio" loop>
-        <source src="https://www.myinstants.com/media/sounds/dubstep.mp3" type="audio/mp3">
-    </audio>
-
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-            const socialLinks = document.querySelector('.social-links');
-            const donateButton = document.getElementById('donate-button');
-            const particlesContainer = document.getElementById('particles');
-            const fallingPixelsContainer = document.getElementById('falling-pixels');
-            const flashesContainer = document.getElementById('flashes');
-            const skullsContainer = document.getElementById('skulls');
-            const matrixRainContainer = document.getElementById('matrix-rain');
-            const customCursor = document.getElementById('custom-cursor');
-            const interactiveDot = document.getElementById('interactive-dot');
-            const audio = document.getElementById('bg-audio');
-
-            // Включение звука при клике
-            document.addEventListener('click', () => {
-                audio.volume = 0.2;
-                audio.play().catch(err => console.log('Audio blocked:', err));
-            });
-
-            // Частицы
-            function createParticles() {
-                for (let i = 0; i < 10; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    particle.style.width = `${Math.random() * 3 + 1}px`;
-                    particle.style.height = particle.style.width;
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.animationDelay = `${Math.random() * 3}s`;
-                    particlesContainer.appendChild(particle);
-                }
-            }
-
-            // Падающие пиксели
-            function createFallingPixels() {
-                for (let i = 0; i < 25; i++) {
-                    const pixel = document.createElement('div');
-                    pixel.classList.add('pixel');
-                    pixel.style.left = `${Math.random() * 100}vw`;
-                    pixel.style.animationDelay = `${Math.random() * 2}s`;
-                    fallingPixelsContainer.appendChild(pixel);
-                }
-            }
-
-            // Вспышки
-            function createFlashes() {
-                setInterval(() => {
-                    const flash = document.createElement('div');
-                    flash.classList.add('flash');
-                    flash.style.left = `${Math.random() * 100}vw`;
-                    flash.style.top = `${Math.random() * 100}vh`;
-                    flash.style.width = `${Math.random() * 60 + 20}px`;
-                    flash.style.height = flash.style.width;
-                    flashesContainer.appendChild(flash);
-                    setTimeout(() => flash.remove(), 1500);
-                }, 2500);
-            }
-
-            // Летающие черепа
-            function createSkulls() {
-                setInterval(() => {
-                    const skull = document.createElement('div');
-                    skull.classList.add('skull');
-                    skull.innerHTML = '💀';
-                    skull.style.left = `${Math.random() * 80}vw`;
-                    skull.style.top = `${Math.random() * 80}vh`;
-                    skull.style.animationDelay = `${Math.random() * 2}s`;
-                    skullsContainer.appendChild(skull);
-                    setTimeout(() => skull.remove(), 5000);
-                }, 2000);
-            }
-
-            // Матричный дождь
-            function createMatrixRain() {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*';
-                for (let i = 0; i < 30; i++) {
-                    const char = document.createElement('div');
-                    char.classList.add('matrix-char');
-                    char.textContent = chars[Math.floor(Math.random() * chars.length)];
-                    char.style.left = `${Math.random() * 100}vw`;
-                    char.style.animationDelay = `${Math.random() * 3}s`;
-                    matrixRainContainer.appendChild(char);
-                }
-            }
-
-            // Кастомный курсор
-            function setupCustomCursor() {
-                document.addEventListener('mousemove', (e) => {
-                    customCursor.style.left = `${e.clientX}px`;
-                    customCursor.style.top = `${e.clientY}px`;
-                    customCursor.style.opacity = 1;
-                });
-                document.addEventListener('mouseleave', () => {
-                    customCursor.style.opacity = 0;
-                });
-                document.addEventListener('touchmove', (e) => {
-                    const touch = e.touches[0];
-                    customCursor.style.left = `${touch.clientX}px`;
-                    customCursor.style.top = `${touch.clientY}px`;
-                    customCursor.style.opacity = 1;
-                });
-                document.addEventListener('touchend', () => {
-                    customCursor.style.opacity = 0;
-                });
-            }
-
-            // Интерактивные точки
-            function setupInteractiveDot() {
-                document.addEventListener('mousemove', (e) => {
-                    interactiveDot.style.left = `${e.clientX}px`;
-                    interactiveDot.style.top = `${e.clientY}px`;
-                    interactiveDot.style.width = `${Math.random() * 15 + 10}px`;
-                    interactiveDot.style.height = interactiveDot.style.width;
-                    interactiveDot.style.opacity = 0.6;
-                    setTimeout(() => (interactiveDot.style.opacity = 0), 600);
-                });
-                document.addEventListener('touchmove', (e) => {
-                    const touch = e.touches[0];
-                    interactiveDot.style.left = `${touch.clientX}px`;
-                    interactiveDot.style.top = `${touch.clientY}px`;
-                    interactiveDot.style.width = `${Math.random() * 15 + 10}px`;
-                    interactiveDot.style.height = interactiveDot.style.width;
-                    interactiveDot.style.opacity = 0.6;
-                    setTimeout(() => (interactiveDot.style.opacity = 0), 600);
-                });
-            }
-
-            // Инициализация
-            createParticles();
-            createFallingPixels();
-            createFlashes();
-            createSkulls();
-            createMatrixRain();
-            setupCustomCursor();
-            setupInteractiveDot();
-
-            // Лоадер
-            setTimeout(() => {
-                if (loader && content && socialLinks && donateButton) {
-                    loader.classList.add('hidden');
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                        content.classList.add('loaded');
-                        socialLinks.classList.add('loaded');
-                        donateButton.classList.add('loaded');
-                    }, 500);
-                } else {
-                    console.error('Пиздец, элементы не найдены!');
-                }
-            }, 1500);
-        });
-    </script>
-</body>
-</html>
+            position: fixed; ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
