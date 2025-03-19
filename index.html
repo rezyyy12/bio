@@ -20,6 +20,9 @@
             --neon-purple: #ff00ff;
             --toxic-green: #00ff00;
             --blood-red: #ff0000;
+            --lang-blue: #00b7eb;
+            --lang-red: #ff3333;
+            --lang-yellow: #ffeb3b;
         }
 
         html, body {
@@ -108,4 +111,663 @@
         }
 
         .particles {
-            position: fixed; ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 8s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            100% { transform: translate(20vw, 20vh) scale(0.2); opacity: 0; }
+        }
+
+        .falling-pixels {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .pixel {
+            position: absolute;
+            background: var(--accent-color);
+            width: 2px;
+            height: 2px;
+            animation: fall 3s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px) scale(1); opacity: 0.8; }
+            100% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+        }
+
+        .flash {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 50%;
+            animation: flashAnim 2s infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes flashAnim {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(2); opacity: 0.3; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 107, 107, 0.4);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, opacity 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .interactive-dot {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            opacity: 1;
+            transition: clip-path 0.5s ease, opacity 0.5s ease-out;
+            clip-path: inset(0 0 0 0);
+        }
+
+        #loader.hidden {
+            clip-path: inset(0 100% 0 0);
+            opacity: 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: bounce 1s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.15s; }
+        .dot:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            display: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        #content.loaded {
+            opacity: 1;
+            display: block;
+        }
+
+        #main-text {
+            font-size: clamp(1.5em, 5vw, 2em);
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+            position: relative;
+            z-index: 2;
+        }
+
+        #main-text::before {
+            content: 'hello my name is rezyyy';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(255, 107, 107, 0.2);
+            text-shadow: 0 0 8px var(--accent-color);
+            z-index: -1;
+            animation: hologram 1.5s infinite alternate;
+        }
+
+        @keyframes hologram {
+            0% { transform: translateY(1px); }
+            100% { transform: translateY(-1px); }
+        }
+
+        .social-links, #donate-button {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .social-links.loaded, #donate-button.loaded {
+            display: block;
+        }
+
+        .button, .donate-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 30px;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            outline: 1px solid var(--outline-color);
+            outline-offset: 2px;
+            cursor: pointer;
+            animation: pulseOutline 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseOutline {
+            0%, 100% { outline-offset: 2px; }
+            50% { outline-offset: 4px; }
+        }
+
+        .button {
+            background: var(--primary-gradient);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
+            box-shadow: 0 0 12px rgba(255, 51, 0, 0.4);
+        }
+
+        .donate-button {
+            background: var(--secondary-gradient);
+        }
+
+        .donate-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ffaa00, #ff8800);
+            box-shadow: 0 0 12px rgba(255, 170, 0, 0.4);
+        }
+
+        .button::after, .donate-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .button:hover::after, .donate-button:hover::after {
+            width: 150%;
+            height: 150%;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .button:hover .tooltip, .donate-button:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .code-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            word-wrap: break-word;
+            box-shadow: 0 0 6px rgba(255, 107, 107, 0.15);
+            position: relative;
+            overflow: hidden;
+            color: #00ff00;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .code-text:hover {
+            box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
+        }
+
+        .code-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 0, 0.1),
+                transparent
+            );
+            animation: matrixFlow 2s linear infinite;
+        }
+
+        @keyframes matrixFlow {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Секция кнопок */
+        .extra-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .extra-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        .neon-purple-btn {
+            background: linear-gradient(45deg, #ff00ff, #cc00cc);
+            border: 2px solid var(--neon-purple);
+        }
+
+        .neon-purple-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--neon-purple);
+            animation: neonPulse 1s infinite;
+        }
+
+        .toxic-green-btn {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            border: 2px solid var(--toxic-green);
+        }
+
+        .toxic-green-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--toxic-green);
+            animation: toxicGlow 0.8s infinite;
+        }
+
+        .blood-red-btn {
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border: 2px solid var(--blood-red);
+        }
+
+        .blood-red-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--blood-red);
+            animation: bloodDrip 1.2s infinite;
+        }
+
+        /* Кнопки языков */
+        .lang-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+
+        .lang-en {
+            background: linear-gradient(45deg, #00b7eb, #0088b3);
+            border: 2px solid var(--lang-blue);
+        }
+
+        .lang-en:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--lang-blue);
+        }
+
+        .lang-ru {
+            background: linear-gradient(45deg, #ff3333, #cc0000);
+            border: 2px solid var(--lang-red);
+        }
+
+        .lang-ru:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--lang-red);
+        }
+
+        .lang-uk {
+            background: linear-gradient(45deg, #ffeb3b, #ffcc00);
+            border: 2px solid var(--lang-yellow);
+        }
+
+        .lang-uk:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--lang-yellow);
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-purple); }
+            50% { box-shadow: 0 0 25px var(--neon-purple); }
+        }
+
+        @keyframes toxicGlow {
+            0%, 100% { box-shadow: 0 0 10px var(--toxic-green); }
+            50% { box-shadow: 0 0 30px var(--toxic-green); }
+        }
+
+        @keyframes bloodDrip {
+            0%, 100% { box-shadow: 0 0 10px var(--blood-red); }
+            50% { box-shadow: 0 0 20px var(--blood-red), 0 5px 10px rgba(255, 0, 0, 0.5); }
+        }
+
+        .extra-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .extra-button:hover::after {
+            width: 200%;
+            height: 200%;
+        }
+
+        @media (max-width: 480px) {
+            .button, .donate-button, .extra-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .code-text {
+                font-size: 1em;
+            }
+            .tooltip { display: none; }
+            .custom-cursor { display: none; }
+            .extra-buttons { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="rainbow-bg"></div>
+    <div class="bg-stripes"></div>
+    <div class="scanline"></div>
+    <div class="particles" id="particles"></div>
+    <div class="falling-pixels" id="falling-pixels"></div>
+    <div id="flashes" class="flashes"></div>
+    <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div id="content">
+        <h1 id="main-text" data-en="hello my name is rezyyy" data-ru="привет, меня зовут rezyyy" data-uk="привіт, мене звати rezyyy">hello my name is rezyyy</h1>
+        <p id="find-me" data-en="you can find me here" data-ru="меня можно найти здесь" data-uk="мене можна знайти тут">you can find me here</p>
+        <div class="social-links">
+            <a class="button" href="https://t.me/the_rezyyy" target="_blank">
+                telegram
+                <span class="tooltip"><i class="fab fa-telegram-plane"></i> Chat with me</span>
+            </a>
+            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">
+                tiktok
+                <span class="tooltip"><i class="fab fa-tiktok"></i> Watch my vids</span>
+            </a>
+        </div>
+        <div class="code-text" id="code-text" data-en="i am a coder from russia<br>i love all of you<br>may peace be upon us and the sky be clear above us" data-ru="я кодер из россии<br>я люблю вас всех<br>пусть мир будет с нами и небо чистым над нами" data-uk="я кодер з росії<br>я люблю вас усіх<br>хай мир буде з нами і небо чистим над нами">
+            i am a coder from russia<br>
+            i love all of you<br>
+            may peace be upon us and the sky be clear above us
+        </div>
+
+        <!-- Секция кнопок -->
+        <div class="extra-buttons">
+            <!-- Оригинальные кнопки -->
+            <button class="extra-button neon-purple-btn" onclick="alert('Ты нажал на неоновую хуйню, братишка!')">
+                Neon Shit
+                <span class="tooltip">Пиздец, кликай!</span>
+            </button>
+            <button class="extra-button toxic-green-btn" onclick="document.body.style.backgroundColor = '#00ff00';">
+                Toxic Vibes
+                <span class="tooltip">Залей всё зеленью!</span>
+            </button>
+            <button class="extra-button blood-red-btn" onclick="spawnSkulls()">
+                Blood Rain
+                <span class="tooltip">Черепа, сука!</span>
+            </button>
+            <!-- Кнопки перевода -->
+            <button class="extra-button lang-btn lang-en" onclick="setLanguage('en')">
+                EN
+                <span class="tooltip">English, motherfucker!</span>
+            </button>
+            <button class="extra-button lang-btn lang-ru" onclick="setLanguage('ru')">
+                RU
+                <span class="tooltip">Русский, бери!</span>
+            </button>
+            <button class="extra-button lang-btn lang-uk" onclick="setLanguage('uk')">
+                UK
+                <span class="tooltip">Українська, брате!</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="donate-button">
+        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">
+            donate
+            <span class="tooltip"><i class="fas fa-donate"></i> Support me</span>
+        </a>
+    </div>
+
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="interactive-dot" id="interactive-dot"></div>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            const socialLinks = document.querySelector('.social-links');
+            const donateButton = document.getElementById('donate-button');
+            const particlesContainer = document.getElementById('particles');
+            const fallingPixelsContainer = document.getElementById('falling-pixels');
+            const flashesContainer = document.getElementById('flashes');
+            const customCursor = document.getElementById('custom-cursor');
+            const interactiveDot = document.getElementById('interactive-dot');
+
+            function createParticles() {
+                for (let i = 0; i < 8; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    particle.style.width = `${Math.random() * 2 + 1}px`;
+                    particle.style.height = particle.style.width;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.animationDelay = `${Math.random() * 2}s`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            function createFallingPixels() {
+                for (let i = 0; i < 20; i++) {
+                    const pixel = document.createElement('div');
+                    pixel.classList.add('pixel');
+                    pixel.style.left = `${Math.random() * 100}vw`;
+                    pixel.style.animationDelay = `${Math.random() * 2}s`;
+                    fallingPixelsContainer.appendChild(pixel);
+                }
+            }
+
+            function createFlashes() {
+                setInterval(() => {
+                    const flash = document.createElement('div');
+                    flash.classList.add('flash');
+                    flash.style.left = `${Math.random() * 100}vw`;
+                    flash.style.top = `${Math.random() * 100}vh`;
+                    flash.style.width = `${Math.random() * 50 + 20}px`;
+                    flash.style.height = flash.style.width;
+                    flashesContainer.appendChild(flash);
+                    setTimeout(() => flash.remove(), 2000);
+                }, 3000);
+            }
+
+            function setupCustomCursor() {
+                document.addEventListener('mousemove', (e) => {
+                    customCursor.style.left = `${e.clientX}px`;
+                    customCursor.style.top = `${e.clientY}px`;
+                    customCursor.style.opacity = 1;
+                });
+                document.addEventListener('mouseleave', () => {
+                    customCursor.style.opacity = 0;
+                });
+                document.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    customCursor.style.left = `${touch.clientX}px`;
+                    customCursor.style.top = `${touch.clientY}px`;
+                    customCursor.style.opacity = 1;
+                });
+                document.addEventListener('touchend', () => {
+                    customCursor.style.opacity = 0;
+                });
+            }
+
+            function setupInteractiveDot() {
+                document.addEventListener('mousemove', (e) => {
+                    interactiveDot.style.left = `${e.clientX}px`;
+                    interactiveDot.style.top = `${e.clientY}px`;
+                    interactiveDot.style.width = `${Math.random() * 10 + 10}px`;
+                    interactiveDot.style.height = interactiveDot.style.width;
+                    interactiveDot.style.opacity = 0.5;
+                    setTimeout(() => (interactiveDot.style.opacity = 0), 800);
+                });
+                document.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    interactiveDot.style.left = `${touch.clientX}px`;
+                    interactiveDot.style.top = `${touch.clientY}px`;
+                    interactiveDot.style.width = `${Math.random() * 10 + 10}px`;
+                    interactiveDot.style.height = interactiveDot.style.width;
+                    interactiveDot.style.opacity = 0.5;
+                    setTimeout(() => (interactiveDot.style.opacity = 0), 800);
+                });
+            }
+
+            // Функция спавна черепов
+            window.spawnSkulls = function() {
+                for (let i = 0; i < 10; i++) {
+                    const skull = document.createElement('div');
+                    skull.innerHTML = '💀';
+                    skull.style.position = 'absolute';
+                    skull.style.left = `${Math.random() * 100}vw`;
+                    skull.style.top = `${Math.random() * 100}vh`;
+                    skull.style.fontSize = '30px';
+                    skull.style.color = '#fff';
+                    skull.style.zIndex = '100';
+                    skull.style.animation = 'skullFall 3s linear forwards';
+                    document.body.appendChild(skull);
+                    setTimeout(() => skull.remove(), 3000);
+                }
+            }
+
+            // Функция перевода
+            window.setLanguage = function(lang) {
+                const elements = document.querySelectorAll('[data-' + lang + ']');
+                elements.forEach(el => {
+                    el.innerHTML = el.getAttribute('data-' + lang);
+                });
+                document.documentElement.lang = lang;
+            }
+
+            createParticles();
+            createFallingPixels();
+            createFlashes();
+            setupCustomCursor();
+            setupInteractiveDot();
+
+            setTimeout(() => {
+                if (loader && content && socialLinks && donateButton) {
+                    loader.classList.add('hidden');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        content.classList.add('loaded');
+                        socialLinks.classList.add('loaded');
+                        donateButton.classList.add('loaded');
+                    }, 600);
+                } else {
+                    console.error('One or more elements not found!');
+                }
+            }, 2000);
+        });
+
+        // Анимация падения черепов
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes skullFall {
+                0% { transform: translateY(-100vh); opacity: 1; }
+                100% { transform: translateY(100vh); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
