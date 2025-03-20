@@ -81,28 +81,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        .scanline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0) 50%,
-                rgba(255, 255, 255, 0.02) 51%,
-                rgba(255, 255, 255, 0) 52%
-            );
-            pointer-events: none;
-            z-index: 0;
-            animation: scan 5s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
         .particles {
             position: fixed;
             top: 0;
@@ -194,16 +172,6 @@
             transform: translate(-50%, -50%);
             transition: transform 0.1s ease, opacity 0.1s ease;
             mix-blend-mode: difference;
-        }
-
-        .interactive-dot {
-            position: absolute;
-            background: rgba(255, 107, 107, 0.3);
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            z-index: 1;
         }
 
         #loader {
@@ -430,7 +398,6 @@
 <body>
     <div class="rainbow-bg"></div>
     <div class="bg-stripes"></div>
-    <div class="scanline"></div>
     <div class="particles" id="particles"></div>
     <div class="falling-pixels" id="falling-pixels"></div>
     <div id="flashes" class="flashes"></div>
@@ -472,7 +439,6 @@
     </div>
 
     <div class="custom-cursor" id="custom-cursor"></div>
-    <div class="interactive-dot" id="interactive-dot"></div>
     <div id="glow-rings"></div>
 
     <script defer>
@@ -486,7 +452,6 @@
             const flashesContainer = document.getElementById('flashes');
             const glowRingsContainer = document.getElementById('glow-rings');
             const customCursor = document.getElementById('custom-cursor');
-            const interactiveDot = document.getElementById('interactive-dot');
 
             function createParticles() {
                 for (let i = 0; i < 8; i++) {
@@ -557,32 +522,11 @@
                 });
             }
 
-            function setupInteractiveDot() {
-                document.addEventListener('mousemove', (e) => {
-                    interactiveDot.style.left = `${e.clientX}px`;
-                    interactiveDot.style.top = `${e.clientY}px`;
-                    interactiveDot.style.width = `${Math.random() * 10 + 10}px`;
-                    interactiveDot.style.height = interactiveDot.style.width;
-                    interactiveDot.style.opacity = 0.5;
-                    setTimeout(() => interactiveDot.style.opacity = 0, 800);
-                });
-                document.addEventListener('touchmove', (e) => {
-                    const touch = e.touches[0];
-                    interactiveDot.style.left = `${touch.clientX}px`;
-                    interactiveDot.style.top = `${touch.clientY}px`;
-                    interactiveDot.style.width = `${Math.random() * 10 + 10}px`;
-                    interactiveDot.style.height = interactiveDot.style.width;
-                    interactiveDot.style.opacity = 0.5;
-                    setTimeout(() => interactiveDot.style.opacity = 0, 800);
-                });
-            }
-
             createParticles();
             createFallingPixels();
             createFlashes();
             createGlowRings();
             setupCustomCursor();
-            setupInteractiveDot();
 
             setTimeout(() => {
                 loader.classList.add('hidden');
