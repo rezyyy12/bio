@@ -1,543 +1,152 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rezyyy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
-            --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
-            --bg-color: #181818;
-            --text-color: #fff;
-            --shadow: 0 2px 6px rgba(255, 102, 0, 0.15);
-            --accent-color: #ff6b6b;
-            --outline-color: rgba(255, 107, 107, 0.5);
-            --rainbow-colors: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0000ff, #8000ff, #ff00ff);
-        }
+:root {
+    --accent-color: #ff6b6b;
+    --bg-color: #181818;
+    --text-color: #fdf6f6;
+    --outline-color: #ff7979;
+    --shadow: 0 2px 8px rgba(0,0,0,0.15);
+    --glow-radius: 50px;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Анимации */
+@keyframes pulseOutline {
+    0%, 100% { outline-color: var(--accent-color); }
+    50% { outline-color: #fcc2c2; }
+}
+@keyframes glowPulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 0.3; }
+    100% { transform: scale(0.8); opacity: 0; }
+}
+@keyframes hologram {
+    0% { transform: translateY(1px);}
+    100% { transform: translateY(-1px);}
+}
+@keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0);}
+    40% { transform: translateY(-0.6em);}
+}
 
-        html, body {
-            background-color: var(--bg-color);
-            overflow-x: hidden;
-            height: 100%;
-        }
+/* Glow ring эффект */
+.glow-ring {
+    position: fixed;
+    width: calc(var(--glow-radius) * 2);
+    height: calc(var(--glow-radius) * 2);
+    background: radial-gradient(circle, var(--accent-color) 20%, transparent 90%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: glowPulse 4s infinite ease-in-out;
+}
 
-        body {
-            font-family: 'Roboto Mono', monospace;
-            text-align: center;
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+/* Кастомный курсор */
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,107,107,0.4);
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, opacity 0.1s;
+    mix-blend-mode: difference;
+}
 
-        .bg-stripes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(255, 107, 107, 0.05),
-                rgba(255, 107, 107, 0.05) 6px,
-                transparent 6px,
-                transparent 12px
-            );
-            z-index: -2;
-            opacity: 0.1;
-            animation: slide 20s linear infinite;
-        }
+/* Лоадер */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.15s;}
+.dot:nth-child(3) { animation-delay: 0.3s;}
 
-        @keyframes slide {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 100%; }
-        }
+/* Содержимое */
+#content {
+    flex-grow: 1;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+#content.loaded {
+    opacity: 1;
+}
+#main-text {
+    font-size: clamp(1.5em, 5vw, 2em);
+    margin-bottom: 1.25em;
+    font-weight: 700;
+    text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+    position: relative;
+    z-index: 2;
+}
+#main-text::before {
+    content: 'hello my name is rezyyy';
+    position: absolute;
+    top: 0; left: 0;
+    color: rgba(255,107,107,0.2);
+    text-shadow: 0 0 8px var(--accent-color);
+    z-index: -1;
+    animation: hologram 1.5s infinite alternate;
+}
+.social-links,
+#donate-button {
+    margin-top: 1.3em;
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+.social-links.loaded,
+#donate-button.loaded {
+    opacity: 1;
+}
 
-        .rainbow-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--rainbow-colors);
-            z-index: -3;
-            animation: rainbowShift 10s infinite;
-            opacity: 0.05;
-        }
+/* Кнопки */
+.button,
+.donate-button {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: 2em;
+    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+    box-shadow: var(--shadow);
+    outline: 1px solid var(--outline-color);
+    outline-offset: 2px;
+    cursor: pointer;
+    animation: pulseOutline 2s infinite ease-in-out;
+    background: transparent;
+}
 
-        @keyframes rainbowShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 8s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-            100% { transform: translate(20vw, 20vh) scale(0.2); opacity: 0; }
-        }
-
-        .falling-pixels {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .pixel {
-            position: absolute;
-            background: var(--accent-color);
-            width: 2px;
-            height: 2px;
-            animation: fall 3s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10px) scale(1); opacity: 0.8; }
-            100% { transform: translateY(110vh) scale(0.5); opacity: 0; }
-        }
-
-        .flash {
-            position: absolute;
-            background: rgba(255, 107, 107, 0.1);
-            border-radius: 50%;
-            animation: flashAnim 2s infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        @keyframes flashAnim {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(2); opacity: 0.3; }
-            100% { transform: scale(4); opacity: 0; }
-        }
-
-        .glow-ring {
-            position: fixed;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(255, 107, 107, 0.2), transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: glowPulse 4s infinite ease-in-out;
-            opacity: 0;
-        }
-
-        @keyframes glowPulse {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 0.3; }
-            100% { transform: scale(0.8); opacity: 0; }
-        }
-
-        .custom-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 107, 107, 0.4);
-            border: 2px solid var(--accent-color);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease, opacity 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-        }
-
-        #loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            animation: bounce 1s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) { animation-delay: 0.15s; }
-        .dot:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-6px); }
-        }
-
-        #content {
-            flex-grow: 1;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        #content.loaded {
-            opacity: 1;
-        }
-
-        #main-text {
-            font-size: clamp(1.5em, 5vw, 2em);
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
-            position: relative;
-            z-index: 2;
-        }
-
-        #main-text::before {
-            content: 'hello my name is rezyyy';
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: rgba(255, 107, 107, 0.2);
-            text-shadow: 0 0 8px var(--accent-color);
-            z-index: -1;
-            animation: hologram 1.5s infinite alternate;
-        }
-
-        @keyframes hologram {
-            0% { transform: translateY(1px); }
-            100% { transform: translateY(-1px); }
-        }
-
-        .social-links, #donate-button {
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .social-links.loaded, #donate-button.loaded {
-            opacity: 1;
-        }
-
-        .button, .donate-button {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 1em;
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--text-color);
-            border-radius: 30px;
-            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-            outline: 1px solid var(--outline-color);
-            outline-offset: 2px;
-            cursor: pointer;
-            animation: pulseOutline 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseOutline {
-            0%, 100% { outline-offset: 2px; }
-            50% { outline-offset: 4px; }
-        }
-
-        .button {
-            background: var(--primary-gradient);
-        }
-
-        .button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ff3300, #cc0000);
-            box-shadow: 0 0 12px rgba(255, 51, 0, 0.4);
-        }
-
-        .donate-button {
-            background: var(--secondary-gradient);
-        }
-
-        .donate-button:hover {
-            transform: scale(1.05);
-            background: linear-gradient(45deg, #ffaa00, #ff8800);
-            box-shadow: 0 0 12px rgba(255, 170, 0, 0.4);
-        }
-
-        .button::after, .donate-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-        }
-
-        .button:hover::after, .donate-button:hover::after {
-            width: 150%;
-            height: 150%;
-        }
-
-        .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease;
-            z-index: 10;
-        }
-
-        .button:hover .tooltip, .donate-button:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .code-text {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 1.2em;
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 0 6px rgba(255, 107, 107, 0.15);
-            position: relative;
-            overflow: hidden;
-            color: #00ff00;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .code-text:hover {
-            box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
-        }
-
-        .code-text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 255, 0, 0.1),
-                transparent
-            );
-            animation: matrixFlow 2s linear infinite;
-        }
-
-        @keyframes matrixFlow {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        @media (max-width: 480px) {
-            .button, .donate-button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-            .code-text {
-                font-size: 1em;
-            }
-            .tooltip { display: none; }
-            .custom-cursor { display: none; }
-        }
-    </style>
-</head>
-<body>
-    <div class="rainbow-bg"></div>
-    <div class="bg-stripes"></div>
-    <div class="particles" id="particles"></div>
-    <div class="falling-pixels" id="falling-pixels"></div>
-    <div id="flashes" class="flashes"></div>
-    <div id="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
-
-    <div id="content">
-        <h1 id="main-text">hello my name is rezyyy</h1>
-        <p>you can find me here</p>
-        <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy" target="_blank">
-                telegram
-                <span class="tooltip"><i class="fab fa-telegram-plane"></i> Chat with me</span>
-            </a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">
-                tiktok
-                <span class="tooltip"><i class="fab fa-tiktok"></i> Watch my vids</span>
-            </a>
-            <a class="button" href="https://t.me/rezyyy_dolbaeb" target="_blank">
-                channel
-                <span class="tooltip"><i class="fab fa-telegram-plane"></i> Join my chaos</span>
-            </a>
-        </div>
-        <div class="code-text">
-            i am a coder from russia<br>
-            i love all of you and kittens<br>
-            may peace be upon us and the sky be clear above us
-        </div>
-    </div>
-
-    <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">
-            donate
-            <span class="tooltip"><i class="fas fa-donate"></i> Support me</span>
-        </a>
-    </div>
-
-    <div class="custom-cursor" id="custom-cursor"></div>
-    <div id="glow-rings"></div>
-
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-            const socialLinks = document.querySelector('.social-links');
-            const donateButton = document.getElementById('donate-button');
-            const particlesContainer = document.getElementById('particles');
-            const fallingPixelsContainer = document.getElementById('falling-pixels');
-            const flashesContainer = document.getElementById('flashes');
-            const glowRingsContainer = document.getElementById('glow-rings');
-            const customCursor = document.getElementById('custom-cursor');
-
-            function createParticles() {
-                for (let i = 0; i < 8; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    const size = Math.random() * 2 + 1;
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.animationDelay = `${Math.random() * 2}s`;
-                    particlesContainer.appendChild(particle);
-                }
-            }
-
-            function createFallingPixels() {
-                for (let i = 0; i < 20; i++) {
-                    const pixel = document.createElement('div');
-                    pixel.classList.add('pixel');
-                    pixel.style.left = `${Math.random() * 100}vw`;
-                    pixel.style.animationDelay = `${Math.random() * 2}s`;
-                    fallingPixelsContainer.appendChild(pixel);
-                }
-            }
-
-            function createFlashes() {
-                setInterval(() => {
-                    const flash = document.createElement('div');
-                    flash.classList.add('flash');
-                    flash.style.left = `${Math.random() * 100}vw`;
-                    flash.style.top = `${Math.random() * 100}vh`;
-                    flash.style.width = `${Math.random() * 50 + 20}px`;
-                    flash.style.height = flash.style.width;
-                    flashesContainer.appendChild(flash);
-                    setTimeout(() => flash.remove(), 2000);
-                }, 3000);
-            }
-
-            function createGlowRings() {
-                setInterval(() => {
-                    const ring = document.createElement('div');
-                    ring.classList.add('glow-ring');
-                    ring.style.left = `${Math.random() * 100}vw`;
-                    ring.style.top = `${Math.random() * 100}vh`;
-                    ring.style.animationDelay = `${Math.random() * 2}s`;
-                    glowRingsContainer.appendChild(ring);
-                    setTimeout(() => ring.remove(), 4000);
-                }, 2000);
-            }
-
-            function setupCustomCursor() {
-                document.addEventListener('mousemove', (e) => {
-                    customCursor.style.left = `${e.clientX}px`;
-                    customCursor.style.top = `${e.clientY}px`;
-                    customCursor.style.opacity = 1;
-                });
-                document.addEventListener('mouseleave', () => {
-                    customCursor.style.opacity = 0;
-                });
-                document.addEventListener('touchmove', (e) => {
-                    const touch = e.touches[0];
-                    customCursor.style.left = `${touch.clientX}px`;
-                    customCursor.style.top = `${touch.clientY}px`;
-                    customCursor.style.opacity = 1;
-                });
-                document.addEventListener('touchend', () => {
-                    customCursor.style.opacity = 0;
-                });
-            }
-
-            createParticles();
-            createFallingPixels();
-            createFlashes();
-            createGlowRings();
-            setupCustomCursor();
-
-            setTimeout(() => {
-                loader.classList.add('hidden');
-                setTimeout(() => {
-                    loader.remove();
-                    content.classList.add('loaded');
-                    socialLinks.classList.add('loaded');
-                    donateButton.classList.add('loaded');
-                }, 500);
-            }, 2000);
-        });
-    </script>
-</body>
-</html>
+@media (max-width: 600px) {
+    #content {
+        padding: 0.5rem;
+    }
+    .custom-cursor,
+    .glow-ring {
+        display: none; /* Курсор и свечения отключены на мобильных для удобства */
+    }
+    #main-text {
+        font-size: 1.1em;
+    }
+}
