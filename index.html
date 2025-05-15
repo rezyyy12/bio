@@ -1,405 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>rezyyy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(45deg, #ff6600, #ff3300);
-            --secondary-gradient: linear-gradient(45deg, #ffcc00, #ffaa00);
-            --bg-color: #181818;
-            --text-color: #fff;
-            --shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
-            --accent-color: #ff6b6b;
-            --outline-color: rgba(255, 107, 107, 0.5);
-            --rainbow-colors: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0000ff, #8000ff);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            background-color: var(--bg-color);
-            height: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Roboto Mono', monospace;
-            text-align: center;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .bg-stripes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(45deg, rgba(255, 107, 107, 0.05), rgba(255, 107, 107, 0.05) 6px, transparent 6px, transparent 12px);
-            z-index: -2;
-            opacity: 0.1;
-            animation: slide 20s linear infinite;
-        }
-
-        @keyframes slide {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 100%; }
-        }
-
-        .rainbow-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--rainbow-colors);
-            z-index: -3;
-            animation: rainbowShift 10s infinite;
-            opacity: 0.05;
-        }
-
-        @keyframes rainbowShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 8s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-            100% { transform: translate(20vw, 20vh) scale(0.2); opacity: 0; }
-        }
-
-        .falling-pixels {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .pixel {
-            position: absolute;
-            background: var(--accent-color);
-            width: 2px;
-            height: 2px;
-            animation: fall 3s linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10px) scale(1); opacity: 0.8; }
-            100% { transform: translateY(110vh) scale(0.5); opacity: 0; }
-        }
-
-        .flash {
-            position: absolute;
-            background: rgba(255, 107, 107, 0.1);
-            border-radius: 50%;
-            animation: flashAnim 2s infinite;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        @keyframes flashAnim {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(2); opacity: 0.3; }
-            100% { transform: scale(4); opacity: 0; }
-        }
-
-        .glow-ring {
-            position: fixed;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(255, 107, 107, 0.2), transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: glowPulse 4s infinite ease-in-out;
-            opacity: 0;
-        }
-
-        @keyframes glowPulse {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 0.3; }
-            100% { transform: scale(0.8); opacity: 0; }
-        }
-
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-        }
-
-        #loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            animation: bounce 1s infinite ease-in-out;
-        }
-
-        .dot:nth-child(2) { animation-delay: 0.15s; }
-        .dot:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-        }
-
-        #content {
-            flex-grow: 1;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        #content.loaded {
-            opacity: 1;
-        }
-
-        #main-text {
-            font-size: clamp(1.5em, 5vw, 2em);
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: 0 0 8px var(--accent-color);
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-links, #donate-button {
-            margin-top: 20px;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .social-links.loaded, #donate-button.loaded {
-            opacity: 1;
-        }
-
-        .button, .donate-button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: clamp(1em, 3vw, 1.2em);
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--text-color);
-            border-radius: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-            margin: 5px;
-        }
-
-        .button {
-            background: var(--primary-gradient);
-        }
-
-        .button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 51, 0, 0.5);
-        }
-
-        .donate-button {
-            background: var(--secondary-gradient);
-        }
-
-        .donate-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
-        }
-
-        .code-text {
-            font-size: clamp(1em, 4vw, 1.2em);
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: var(--shadow);
-            color: #00ff00;
-        }
-
-        @media (max-width: 768px) {
-            .button, .donate-button {
-                padding: 12px 25px;
-            }
-            .particles, .falling-pixels, .flash, .glow-ring {
-                display: none;
-            }
-            .rainbow-bg, .bg-stripes {
-                opacity: 0.03;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .particles, .falling-pixels, .flash, .glow-ring, .bg-stripes, .rainbow-bg {
-                display: none;
-            }
-            .button, .donate-button {
-                transition: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rezyyy</title>
+  <meta name="description" content="Personal page of rezyyy, coder from Russia.">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --gradient-main: linear-gradient(45deg, #ff6600, #ff3300);
+      --gradient-secondary: linear-gradient(45deg, #ffaa00, #ffcc00);
+      --bg: #181818;
+      --text: #fff;
+      --accent: #ff6b6b;
+      --shadow: 0 4px 16px rgba(255, 102, 0, 0.18);
+      --rainbow: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0000ff, #8000ff);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html {
+      height:100%; min-height:100vh; background:var(--bg); color:var(--text);
+      font-family:'Roboto Mono',monospace; text-align:center;
+    }
+    main { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .bg-effect, .rainbow-bg { position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:-2;}
+    .bg-effect { background:repeating-linear-gradient(45deg,rgba(255,107,107,0.07) 0 6px,transparent 6px 12px); animation:slidebg 20s linear infinite; opacity:0.12;}
+    @keyframes slidebg { to { background-position: 100% 100%; } }
+    .rainbow-bg { background:var(--rainbow); opacity:0.06; animation:rainbow 10s linear infinite; z-index:-3;}
+    @keyframes rainbow {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+    h1 { font-size:clamp(2.1rem,6vw,3rem); font-weight:700; margin-bottom:0.5em;
+      text-shadow:0 0 10px var(--accent),0 0 2px #fff2;
+      line-height:1.1;
+    }
+    p { margin-bottom:1.5em; font-size:1.18em; }
+    nav.social {
+      display:flex; gap:1em; justify-content:center; margin-bottom:2em; flex-wrap:wrap;
+      opacity:0; transform:translateY(32px); transition:.7s;
+    }
+    nav.social.visible { opacity:1; transform:none; }
+    nav.social a {
+      text-decoration:none; color:var(--text); font-weight:600;
+      padding:0.9em 2em; border-radius:28px;
+      background:var(--gradient-main); box-shadow:var(--shadow);
+      transition:.25s;
+      font-size:1.14em;
+      margin-bottom:.5em;
+      position:relative;
+      overflow:hidden;
+    }
+    nav.social a:hover { filter:brightness(1.15) saturate(1.2); transform:scale(1.04);}
+    .bio {
+      background:#232323; color:#00ff87; padding:2em 1em; margin:2em auto 0;
+      border-radius:13px; max-width:500px; box-shadow:var(--shadow);
+      font-size:1.08em; font-family:'Roboto Mono',monospace;
+      letter-spacing:.02em;
+      opacity:0; transition:.8s;
+      line-height:1.6;
+    }
+    .bio.visible { opacity:1; }
+    .donate-wrap { margin:2em 0 0 0; transition:.7s; opacity:0; }
+    .donate-wrap.visible { opacity:1; }
+    .donate-btn {
+      padding:1em 2em; border:none; border-radius:28px; font-size:1.13em;
+      background:var(--gradient-secondary); color:var(--text);
+      font-weight:700; box-shadow:var(--shadow); cursor:pointer;
+      text-decoration:none; transition:.18s;
+      display:inline-block;
+    }
+    .donate-btn:hover { filter:brightness(1.13) saturate(1.1); transform:scale(1.045);}
+    /* Loader */
+    #loader {
+      position:fixed; left:0; top:0; width:100vw; height:100vh;
+      background:var(--bg); display:flex; align-items:center; justify-content:center;
+      z-index:10; transition:opacity .42s; opacity:1;
+    }
+    #loader.hide { opacity:0; pointer-events:none; }
+    .dots { display: flex; gap: 10px;}
+    .dot {
+      width:13px; height:13px; border-radius:50%; background:var(--accent);
+      animation:bounce 1.1s infinite ease-in-out;
+    }
+    .dot:nth-child(2){ animation-delay:0.18s;}
+    .dot:nth-child(3){ animation-delay:0.36s;}
+    @keyframes bounce {
+      0%,80%,100%{ transform:translateY(0);}
+      40%{ transform:translateY(-14px);}
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size:2rem; }
+      nav.social a, .donate-btn { font-size:1em; padding:0.85em 1.2em; }
+      .bio{ font-size:.97em; }
+    }
+    @media (max-width:400px) {
+      .bio{ padding:1.2em 0.2em; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bg-effect, .rainbow-bg, #loader, .dot { animation:none !important; }
+    }
+  </style>
 </head>
 <body>
-    <div class="rainbow-bg"></div>
-    <div class="bg-stripes"></div>
-    <div class="particles" id="particles"></div>
-    <div class="falling-pixels" id="falling-pixels"></div>
-    <div id="flashes" class="flashes"></div>
-
-    <div id="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+  <div class="bg-effect"></div>
+  <div class="rainbow-bg"></div>
+  <div id="loader" aria-label="Loading">
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
     </div>
-
-    <div id="content">
-        <h1 id="main-text">hello my name is rezyyy</h1>
-        <p>you can find me here</p>
-        <div class="social-links">
-            <a class="button" href="https://t.me/the_rezyyy" target="_blank">telegram</a>
-            <a class="button" href="https://www.tiktok.com/@rezyyy_ts" target="_blank">tiktok</a>
-            <a class="button" href="https://t.me/rezyyy_dolbaeb" target="_blank">channel</a>
-        </div>
-        <div class="code-text">
-            i am a coder from russia<br>
-            i love all of you and kittens<br>
-            may peace be upon us and the sky be clear above us
-        </div>
+  </div>
+  <main>
+    <h1>hello, my name is rezyyy</h1>
+    <p>you can find me here:</p>
+    <nav class="social" aria-label="Social links">
+      <a href="https://t.me/the_rezyyy" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i> telegram</a>
+      <a href="https://www.tiktok.com/@rezyyy_ts" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i> tiktok</a>
+      <a href="https://t.me/rezyyy_dolbaeb" target="_blank" rel="noopener noreferrer"><i class="fas fa-bullhorn"></i> channel</a>
+    </nav>
+    <section class="bio">
+      I am a coder from Russia.<br>
+      I love all of you and kittens.<br>
+      May peace be upon us and the sky be clear above us.
+    </section>
+    <div class="donate-wrap">
+      <a class="donate-btn" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-heart"></i> donate
+      </a>
     </div>
-
-    <div id="donate-button">
-        <a class="donate-button" href="https://t.me/send?start=IVZm9Wi245y7" target="_blank">donate</a>
-    </div>
-
-    <div id="glow-rings"></div>
-
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-            const socialLinks = document.querySelector('.social-links');
-            const donateButton = document.getElementById('donate-button');
-            const particlesContainer = document.getElementById('particles');
-            const fallingPixelsContainer = document.getElementById('falling-pixels');
-            const flashesContainer = document.getElementById('flashes');
-            const glowRingsContainer = document.getElementById('glow-rings');
-
-            function createParticles(count = 4) {
-                for (let i = 0; i < count; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    const size = Math.random() * 2 + 1;
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${Math.random() * 100}vw`;
-                    particle.style.top = `${Math.random() * 100}vh`;
-                    particle.style.animationDelay = `${Math.random() * 5}s`;
-                    particlesContainer.appendChild(particle);
-                }
-            }
-
-            function createFallingPixels(count = 10) {
-                for (let i = 0; i < count; i++) {
-                    const pixel = document.createElement('div');
-                    pixel.classList.add('pixel');
-                    pixel.style.left = `${Math.random() * 100}vw`;
-                    pixel.style.animationDelay = `${Math.random() * 2}s`;
-                    fallingPixelsContainer.appendChild(pixel);
-                }
-            }
-
-            function createFlashes() {
-                setInterval(() => {
-                    const flash = document.createElement('div');
-                    flash.classList.add('flash');
-                    flash.style.left = `${Math.random() * 100}vw`;
-                    flash.style.top = `${Math.random() * 100}vh`;
-                    flash.style.width = `${Math.random() * 100 + 50}px`;
-                    flash.style.height = flash.style.width;
-                    flashesContainer.appendChild(flash);
-                    setTimeout(() => flash.remove(), 2000);
-                }, 3000);
-            }
-
-            function createGlowRings() {
-                setInterval(() => {
-                    const ring = document.createElement('div');
-                    ring.classList.add('glow-ring');
-                    ring.style.left = `${Math.random() * 100}vw`;
-                    ring.style.top = `${Math.random() * 100}vh`;
-                    ring.style.animationDelay = `${Math.random() * 2}s`;
-                    glowRingsContainer.appendChild(ring);
-                    setTimeout(() => ring.remove(), 4000);
-                }, 2000);
-            }
-
-            const isLowPower = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!isLowPower) {
-                createParticles(4);
-                createFallingPixels(10);
-                createFlashes();
-                createGlowRings();
-            }
-
-            setTimeout(() => {
-                loader.classList.add('hidden');
-                setTimeout(() => {
-                    loader.remove();
-                    content.classList.add('loaded');
-                    socialLinks.classList.add('loaded');
-                    donateButton.classList.add('loaded');
-                }, 500);
-            }, 2000);
-        });
-    </script>
+  </main>
+  <script>
+    // Loader + fade-in animation
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+        document.querySelector('.social').classList.add('visible');
+        document.querySelector('.bio').classList.add('visible');
+        document.querySelector('.donate-wrap').classList.add('visible');
+      }, 1850);
+    });
+  </script>
 </body>
 </html>
